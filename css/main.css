@@ -1,0 +1,12 @@
+/* css */
+
+@font-face 
+{
+  font-family: "mainfont";
+  src: url("../fonts/Web437_IBM_VGA_9x16.woff") format('woff');
+}
+
+html
+{
+    font-family: mainfont
+}
