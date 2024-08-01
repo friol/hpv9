@@ -23,6 +23,14 @@ class cGui
         if ((newMousey>=0)&&(newMousey<fb.numRows)) this.mouseySquare=newMousey;
     }
 
+    handleMessage(msgType,msgPayload)
+    {
+        this.listOfComponents.forEach(element => 
+        {
+            element.handleMessage(msgType,msgPayload);    
+        });
+    }
+
     draw(fb)
     {
         this.listOfComponents.forEach(element => 

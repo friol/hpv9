@@ -6,11 +6,29 @@ var glbMenuBar;
 
 var glbFrameBuffer;
 
+// fps calculon
+var filterStrength = 20;
+var frameTime = 0, lastLoop = new Date, thisLoop;
+var fpsArray=new Array();
+
+//
+//
+//
+
 function animate()
 {
     glbGui.draw(glbFrameBuffer);
 
     glbFrameBuffer.blit();
+
+    // calc fps
+    var thisFrameTime = (thisLoop=new Date) - lastLoop;
+    frameTime+= (thisFrameTime - frameTime) / filterStrength;
+    lastLoop = thisLoop;
+
+    var fpsOut = document.getElementById('fpsSpan');
+    var fpeez=parseInt((1000/frameTime).toFixed(1));
+    fpsOut.innerHTML = fpeez + " fps";
 
     window.requestAnimationFrame(animate);
 }
@@ -22,6 +40,7 @@ function mouseMove(evt)
     const mousey=evt.clientY-rect.top;
 
     glbGui.storeMousePos(mousex,mousey,glbFrameBuffer);
+    glbGui.handleMessage(messageTypesEnum.MSG_MOUSEMOVE,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
 }
 
 function setup()

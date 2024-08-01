@@ -6,6 +6,10 @@ class cDesktop
     {
     }
 
+    handleMessage(msgType,msgPayload)
+    {
+    }
+
     draw(fb)
     {
         const fbw=fb.numCols;

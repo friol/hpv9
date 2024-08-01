@@ -53,17 +53,31 @@ class cFrameBuffer
 
     blit()
     {
+        // optimizing the inner algo
         const outputDiv=document.getElementById(this.drawDivName);
 
         var theHTML="";
         for (var r=0;r<this.numRows;r++)
         {
+            var oldBg="NA";
+            var oldFg="NA";
+            var thisLine="<span style=\"color:"+this.framebuffer[r][0].fgColor+";background-color:"+this.framebuffer[r][0].bgColor+"\">";
             for (var c=0;c<this.numCols;c++)
             {
-                theHTML+="<span style=\"color:"+this.framebuffer[r][c].fgColor+
-                ";background-color:"+this.framebuffer[r][c].bgColor+"\">"+this.framebuffer[r][c].character+"</span>";                
+                if ((c!=0)&&((oldFg!=this.framebuffer[r][c].fgColor)||(oldBg!=this.framebuffer[r][c].bgColor)))
+                {
+                    thisLine+="</span><span style=\"color:"+this.framebuffer[r][c].fgColor+
+                        ";background-color:"+this.framebuffer[r][c].bgColor+"\">"+this.framebuffer[r][c].character;
+
+                    oldFg=this.framebuffer[r][c].fgColor;
+                    oldBg=this.framebuffer[r][c].bgColor;
+                }
+                else
+                {
+                    thisLine+=this.framebuffer[r][c].character;                
+                }
             }
-            theHTML+="<br/>";
+            theHTML+=thisLine+"</span><br/>";
         }
 
         outputDiv.innerHTML=theHTML;
