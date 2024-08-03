@@ -29,6 +29,11 @@ class cFrameBuffer
         this.numRows=numRows;
 
         this.drawDivName=drawDiv;
+
+        this.shadowMap=[
+            ["lightgray","darkgray"],
+            ["#0507c0","#0304a0"],
+        ]
     }
 
     drawHorizontalLine(row,x0,x1,character,bgColor,fgColor)
@@ -41,13 +46,29 @@ class cFrameBuffer
         }
     }
 
+    shadowize(row,col)
+    {
+        const bg=this.framebuffer[row][col].bgColor;
+        const fg=this.framebuffer[row][col].fgColor;
+
+        for (var c=0;c<this.shadowMap.length;c++)
+        {
+            if (this.shadowMap[c][0]==bg) this.framebuffer[row][col].bgColor=this.shadowMap[c][1];
+            if (this.shadowMap[c][0]==fg) this.framebuffer[row][col].fgColor=this.shadowMap[c][1];
+        }
+    }
+
     printString(x0,y0,theString,bgColor,fgColor)
     {
         for (var c=x0;c<theString.length+x0;c++)
         {
-            this.framebuffer[y0][c].character=theString[c-x0];            
+            var ch=theString[c-x0];
+            var fg=fgColor;
+            if (ch==" ") { ch="\u2588"; fg=bgColor; }
+
+            this.framebuffer[y0][c].character=ch;            
             this.framebuffer[y0][c].bgColor=bgColor;            
-            this.framebuffer[y0][c].fgColor=fgColor;            
+            this.framebuffer[y0][c].fgColor=fg;            
         }
     }
 
