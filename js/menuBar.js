@@ -2,8 +2,9 @@
 
 class cMenuBar
 {
-    constructor()
+    constructor(theGui)
     {
+        this.guiPtr=theGui;
         this.separatorName="*separator*";
 
         this.menuOptions=[
@@ -39,6 +40,25 @@ class cMenuBar
                 ]
             },
             {
+                "name":"Archive",
+                "highlighted": false,
+                "open":false,
+                "menuxsize":30,
+                "menuysize":11,
+                "options":
+                [
+                    {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV1},
+                    {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV2},
+                    {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV3},
+                    {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV4},
+                    {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV5},
+                    {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV6},
+                    {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV7},
+                    {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV8},
+                    {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openDatunnel},
+                ]
+            },
+            {
                 "name":"Games",
                 "highlighted": false,
                 "open":false,
@@ -51,8 +71,74 @@ class cMenuBar
                     {"name":"Solitario","shortcut":null,"highlighted":false},
                     {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false},
                 ]
+            },
+            {
+                "name":"About",
+                "highlighted":false,
+                "open":false,
+                "menuxsize":30,
+                "menuysize":3,
+                "options":
+                [
+                    {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction},
+                ]
+
             }
         ];
+    }
+
+    openDantonagitV1(callerObj)
+    {
+        window.open("https://www.dantonag.it/index_en.html", '_blank').focus();
+    }
+
+    openDantonagitV2(callerObj)
+    {
+        window.open("https://www.dantonag.it/v2/index2.html", '_blank').focus();
+    }
+
+    openDantonagitV3(callerObj)
+    {
+        window.open("https://www.dantonag.it/hpv3/index.html", '_blank').focus();
+    }
+
+    openDantonagitV4(callerObj)
+    {
+        window.open("https://www.dantonag.it/hpv4/home.html", '_blank').focus();
+    }
+
+    openDantonagitV5(callerObj)
+    {
+        window.open("http://www.dantonag.it/hpv5/main.html", '_blank').focus();
+    }
+
+    openDantonagitV6(callerObj)
+    {
+        window.open("https://www.dantonag.it/hpv6/main.html#", '_blank').focus();
+    }
+
+    openDantonagitV7(callerObj)
+    {
+        window.open("https://www.dantonag.it/hpv7/index.html?site=0", '_blank').focus();
+    }
+
+    openDantonagitV8(callerObj)
+    {
+        window.open("https://www.dantonag.it/hpv8/main.html", '_blank').focus();
+    }
+
+    openDatunnel(callerObj)
+    {
+        window.open("https://datunnel.blogspot.com/", '_blank').focus();
+    }
+
+    aboutFunction(callerObj)
+    {
+        // opens about message box
+        var dialogBox=new cAlertBox(true,"OK!",false,"","About dantonag.it",
+            ["dantonag.it, created by friol","(c) friol 2024","all rights reserved"],70,9,
+            10,10);
+        callerObj.guiPtr.addComponent(dialogBox);
     }
 
     handleMessage(msgType,msgPayload)
@@ -73,18 +159,56 @@ class cMenuBar
 
                     if ((mousex>=x0)&&(mousex<x1)) 
                     {
-                        this.menuOptions[m].open=true;
+                        if (this.menuOptions[m].open)
+                        {
+                            // if it's open, close it
+                            this.menuOptions[m].open=false;
+                        }
+                        else
+                        {
+                            this.menuOptions[m].open=true;
+                        }
                     }
                     else this.menuOptions[m].open=false;
                     poz+=2;
                     poz+=this.menuOptions[m].name.length;
                 }
             }
-            else if (mousey>11)
+            else 
             {
+                // click outside the menu?
+                var poz=4;
                 for (var m=0;m<this.menuOptions.length;m++)
                 {
-                    this.menuOptions[m].open=false;
+                    if (this.menuOptions[m].open)
+                    {
+                        var x0=poz-2;
+                        var x1=x0+this.menuOptions[m].menuxsize+2;
+
+                        if (((mousex<x0)||(mousex>x1))||(mousey>this.menuOptions[m].menuysize))
+                        {
+                            this.menuOptions[m].open=false;
+                        }
+                    }
+
+                    poz+=this.menuOptions[m].name.length+2;
+                }
+
+                // click on one of the options
+                for (var mo=0;mo<this.menuOptions.length;mo++)
+                {
+                    if (this.menuOptions[mo].open)
+                    {
+                        for (var op=0;op<this.menuOptions[mo].options.length;op++)
+                        {
+                            if (this.menuOptions[mo].options[op].highlighted)
+                            {
+                                this.menuOptions[mo].options[op].onClickFun(this);
+                                this.menuOptions[mo].open=false;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }

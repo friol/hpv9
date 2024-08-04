@@ -17,6 +17,7 @@ var fpsArray=new Array();
 
 function animate()
 {
+    glbGui.update();
     glbGui.draw(glbFrameBuffer);
 
     glbFrameBuffer.blit();
@@ -52,6 +53,15 @@ function myOnClick(evt)
     glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
 }
 
+function mouseUp(evt)
+{
+    const rect = document.getElementById("mainDiv").getBoundingClientRect();
+    const mousex=evt.clientX-rect.left;
+    const mousey=evt.clientY-rect.top;
+
+    glbGui.handleMessage(messageTypesEnum.MSG_MOUSEUNCLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+}
+
 function setup()
 {
     var w = window.innerWidth;
@@ -61,11 +71,12 @@ function setup()
     glbGui=new cGui();
     glbDesktop=new cDesktop();
     glbGui.addComponent(glbDesktop);
-    glbMenuBar=new cMenuBar();
+    glbMenuBar=new cMenuBar(glbGui);
     glbGui.addComponent(glbMenuBar);
 
     document.getElementById("mainDiv").addEventListener("mousemove", mouseMove);
 	document.getElementById("mainDiv").onmousedown=function(e) { myOnClick(e); };
+	document.getElementById("mainDiv").onmouseup=function(e) { mouseUp(e); };
     document.getElementById('mainDiv').style.cursor = 'none';
 
     animate();

@@ -31,6 +31,17 @@ class cGui
         });
     }
 
+    update()
+    {
+        for (var w=0;w<this.listOfComponents.length;w++)
+        {
+            if (this.listOfComponents[w].deletionFlag)
+            {
+                this.listOfComponents.splice(w,1);
+            }
+        }
+    }
+
     draw(fb)
     {
         this.listOfComponents.forEach(element => 

@@ -7,17 +7,17 @@ class cFrameBuffer
         this.fontxsize=9;
         this.fontysize=16;
 
-        const numCols=Math.floor(windoww/this.fontxsize);
-        const numRows=Math.floor(windowh/this.fontysize);
+        const numCols=Math.floor(windoww/this.fontxsize)-4;
+        const numRows=Math.floor(windowh/this.fontysize)-4;
 
         console.log("Allocating text framebuffer with "+numRows+" rows and "+numCols+" columns");
 
         this.framebuffer=new Array();
-        for (var r=0;r<numRows;r++)
+        for (var r=0;r<numRows+10;r++)
         {
             var newRow=new Array();
             
-            for (var c=0;c<numCols;c++)
+            for (var c=0;c<numCols+10;c++)
             {
                 newRow.push({"character":" ","fgColor":"#6495ED","bgColor":"#DCDCDC"});
             }
@@ -36,18 +36,31 @@ class cFrameBuffer
         ]
     }
 
-    drawHorizontalLine(row,x0,x1,character,bgColor,fgColor)
+    putPixel(row,col,charz,bgColor,fgColor)
+    {
+        if ((row>=0)&&(row<this.numRows))
+        {
+            if ((col>=0)&&(col<this.numCols))
+            {
+                this.framebuffer[row][col].character=charz;                
+                this.framebuffer[row][col].bgColor=bgColor;                
+                this.framebuffer[row][col].fgColor=fgColor;                
+            }
+        }
+    }
+
+    drawHorizontalLine(row,x0,x1,charz,bgColor,fgColor)
     {
         for (var c=x0;c<x1;c++)        
         {
-            this.framebuffer[row][c].character=character;            
-            this.framebuffer[row][c].bgColor=bgColor;            
-            this.framebuffer[row][c].fgColor=fgColor;            
+            this.putPixel(row,c,charz,bgColor,fgColor);
         }
     }
 
     shadowize(row,col)
     {
+        if ((row<0)||(row>this.numRows-1)||(col<0)||(col>this.numCols-1)) return;
+
         const bg=this.framebuffer[row][col].bgColor;
         const fg=this.framebuffer[row][col].fgColor;
 
@@ -66,9 +79,7 @@ class cFrameBuffer
             var fg=fgColor;
             if (ch==" ") { ch="\u2588"; fg=bgColor; }
 
-            this.framebuffer[y0][c].character=ch;            
-            this.framebuffer[y0][c].bgColor=bgColor;            
-            this.framebuffer[y0][c].fgColor=fg;            
+            this.putPixel(y0,c,ch,bgColor,fg);
         }
     }
 
