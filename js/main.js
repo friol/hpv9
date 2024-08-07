@@ -77,6 +77,13 @@ function setup()
     document.getElementById("mainDiv").addEventListener("mousemove", mouseMove);
 	document.getElementById("mainDiv").onmousedown=function(e) { myOnClick(e); };
 	document.getElementById("mainDiv").onmouseup=function(e) { mouseUp(e); };
+
+    document.addEventListener('keydown', function(event) 
+    {
+        glbGui.handleMessage(messageTypesEnum.MSG_KEYDOWN,[event.key]);
+        //console.log(event.key+" pressed");
+    }, false);
+
     document.getElementById('mainDiv').style.cursor = 'none';
 
     animate();

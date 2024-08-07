@@ -44,7 +44,7 @@ class cMenuBar
                 "highlighted": false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":11,
+                "menuysize":12,
                 "options":
                 [
                     {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV1},
@@ -56,6 +56,7 @@ class cMenuBar
                     {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV7},
                     {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV8},
                     {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openDatunnel},
+                    {"name":"GitHub","shortcut":null,"highlighted":false,"onClickFun":this.openGithub},
                 ]
             },
             {
@@ -66,7 +67,7 @@ class cMenuBar
                 "menuysize":6,
                 "options":
                 [
-                    {"name":"Snake","shortcut":null,"highlighted":false},
+                    {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake},
                     {"name":"Gioco del 15","shortcut":null,"highlighted":false},
                     {"name":"Solitario","shortcut":null,"highlighted":false},
                     {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false},
@@ -132,13 +133,24 @@ class cMenuBar
         window.open("https://datunnel.blogspot.com/", '_blank').focus();
     }
 
+    openGithub(callerObj)
+    {
+        window.open("https://github.com/friol", '_blank').focus();
+    }
+
     aboutFunction(callerObj)
     {
         // opens about message box
         var dialogBox=new cAlertBox(true,"OK!",false,"","About dantonag.it",
-            ["dantonag.it, created by friol","(c) friol 2024","all rights reserved"],70,9,
+            ["dantonag.it v9, created by friol","(c) friol 2024","all rights reserved"],70,9,
             10,10);
         callerObj.guiPtr.addComponent(dialogBox);
+    }
+
+    openSnake(callerObj)
+    {
+        var snakeWindow=new cSnakeWindow(10,10,"Snake-y",50,20,"#2020c0");
+        callerObj.guiPtr.addComponent(snakeWindow);
     }
 
     handleMessage(msgType,msgPayload)
@@ -383,6 +395,10 @@ class cMenuBar
         {
             fb.shadowize(ysz+1,col);
         }
+    }
+
+    update()
+    {
     }
 
     draw(fb)

@@ -39,6 +39,10 @@ class cGui
             {
                 this.listOfComponents.splice(w,1);
             }
+            else
+            {
+                this.listOfComponents[w].update();
+            }
         }
     }
 

@@ -10,6 +10,10 @@ class cDesktop
     {
     }
 
+    update()
+    {
+    }
+
     draw(fb)
     {
         const fbw=fb.numCols;
