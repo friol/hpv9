@@ -2,14 +2,45 @@
 
 class cWindow
 {
-    constructor(px,py,title,dimx,dimy,bgColor)
+    constructor(px,py,title,dimx,dimy,bgColor,parentGui)
     {
-        this.posx=px; this.posy=py;
+        this.parentGui=parentGui;
+        this.targetPosx=px; this.targetPosy=py;
         this.windowTitle=title;
-        this.width=dimx; this.height=dimy;
+
+        this.targetWidth=dimx; this.targetHeight=dimy;
         this.bgColor=bgColor;
 
         this.dragging=false;
+
+        this.displayPhase=0; // 0 opening, 1 normal, 2 closing
+        this.posx=this.targetPosx+Math.floor((this.targetWidth-this.windowTitle.length)/2);
+        this.posy=this.targetPosy+Math.floor((this.targetHeight-2)/2);
+
+        this.width=this.windowTitle.length+8;
+        this.height=2;
+
+        this.priority=-1;
+    }
+
+    update()
+    {
+        if (this.displayPhase>0) return; 
+
+        var creating=false;
+        if (this.posx>this.targetPosx) { this.posx--; creating=true; }
+        if (this.posy>this.targetPosy) { this.posy--; creating=true; }
+        if (this.width<this.targetWidth) { this.width+=2; creating=true; }
+        if (this.height<this.targetHeight) { this.height+=2; creating=true; }
+
+        if (!creating)
+        {
+            this.displayPhase=1;
+            this.posx=this.targetPosx;
+            this.posy=this.targetPosy;
+            this.height=this.targetHeight;
+            this.width=this.targetWidth;
+        }
     }
 
     handleMessage(msgType,msgPayload)
@@ -26,7 +57,6 @@ class cWindow
                     if (mousex==(this.posx+4))
                     {
                         // close box
-                        //console.log("I will be closed");
                         this.deletionFlag=true;
                     }
                     else
@@ -34,8 +64,16 @@ class cWindow
                         this.dragging=true;
                         this.dragPointx=mousex;
                         this.dragPointy=mousey;
+
+                        // window must became the frontmost
+                        this.parentGui.makeFrontmost(this.priority);
                     }
                 }
+            }
+            else
+            {
+                // click on rest of window?
+
             }
         }
         else if (msgType==messageTypesEnum.MSG_MOUSEUNCLICK)

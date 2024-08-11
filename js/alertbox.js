@@ -2,8 +2,10 @@
 
 class cAlertBox
 {
-    constructor(okButton,okButtonText,cancelButton,cancelButtonText,windowTitle,text,wx,wy,posx,posy)
+    constructor(okButton,okButtonText,cancelButton,cancelButtonText,windowTitle,text,wx,wy,posx,posy,parentGui)
     {
+        this.parentGui=parentGui;
+
         this.hasOkButton=okButton;
         this.okButtonText=okButtonText;
         this.hasCancelButton=cancelButton;
@@ -30,6 +32,8 @@ class cAlertBox
             const vertPos=this.windowText.length+3;
             this.okButton=new cButton(horzPos,vertPos,this.okButtonText,"#b0b0b0","#00A800","white",this.posx,this.posy,this.onOkButt,this);
         }
+
+        this.priority=-1;
     }
 
     onOkButt(parent)
@@ -59,6 +63,8 @@ class cAlertBox
                         this.dragging=true;
                         this.dragPointx=mousex;
                         this.dragPointy=mousey;
+
+                        this.parentGui.makeFrontmost(this.priority);
                     }
                 }
             }

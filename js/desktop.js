@@ -4,6 +4,7 @@ class cDesktop
 {
     constructor()
     {
+        this.priority=-10000;
     }
 
     handleMessage(msgType,msgPayload)

@@ -11,7 +11,77 @@ class cGui
 
     addComponent(c)
     {
+        if (c.priority==-1)
+        {
+            // new component; assign it the frontmost priority below 10.000
+            var frontmost=0;
+            for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+            {
+                if ((this.listOfComponents[cmp].priority>frontmost)&&(this.listOfComponents[cmp].priority!=10000))
+                {
+                    frontmost=this.listOfComponents[cmp].priority;
+                }
+            }
+            c.priority=frontmost+1;
+        }
+
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if (c.priority<=this.listOfComponents[cmp].priority)
+            {
+                this.listOfComponents.splice(cmp, 0, c);
+                return;
+            }
+        }
+        
         this.listOfComponents.push(c);
+    }
+
+    makeFrontmost(pri)
+    {
+        // find frontmost
+        var idxFrontmost=0;
+        var maxPri=-10000;
+
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if (this.listOfComponents[cmp].priority>maxPri)
+            {
+                if (this.listOfComponents[cmp].priority!=10000)
+                {
+                    maxPri=this.listOfComponents[cmp].priority;
+                    idxFrontmost=cmp;
+                }
+            }
+        }
+
+        // find our index
+        var idxCurwin=0;
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if (this.listOfComponents[cmp].priority==pri)
+            {
+                idxCurwin=cmp;
+                break;
+            }
+        }
+
+        if (idxCurwin==idxFrontmost) return; // it's already the frontmost
+
+        // make frontmost
+        var w1=this.listOfComponents[idxCurwin];
+        w1.priority=maxPri;
+
+        this.listOfComponents.splice(idxCurwin,1);
+        this.listOfComponents.splice(idxFrontmost,0,w1);
+
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if ((cmp!=idxFrontmost)&&(this.listOfComponents[cmp].priority!=10000)&&(this.listOfComponents[cmp].priority>0))
+            {
+                this.listOfComponents[cmp].priority-=1;
+            }
+        }    
     }
 
     storeMousePos(mx,my,fb)

@@ -3,6 +3,7 @@
 var glbGui;
 var glbDesktop;
 var glbMenuBar;
+var glbStatusBar;
 
 var glbFrameBuffer;
 
@@ -72,7 +73,9 @@ function setup()
     glbDesktop=new cDesktop();
     glbGui.addComponent(glbDesktop);
     glbMenuBar=new cMenuBar(glbGui);
+    glbStatusBar=new cStatusBar(glbGui);
     glbGui.addComponent(glbMenuBar);
+    glbGui.addComponent(glbStatusBar);
 
     document.getElementById("mainDiv").addEventListener("mousemove", mouseMove);
 	document.getElementById("mainDiv").onmousedown=function(e) { myOnClick(e); };

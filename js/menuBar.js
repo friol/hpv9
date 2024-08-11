@@ -6,6 +6,7 @@ class cMenuBar
     {
         this.guiPtr=theGui;
         this.separatorName="*separator*";
+        this.priority=10000;
 
         this.menuOptions=[
             {
@@ -16,12 +17,12 @@ class cMenuBar
                 "menuysize":8,
                 "options":
                 [
-                    {"name":"Open","shortcut":"F1","highlighted":false},
-                    {"name":"Save","shortcut":null,"highlighted":false},
-                    {"name":"Save As","shortcut":null,"highlighted":false},
-                    {"name":this.separatorName,"shortcut":null,"highlighted":false},
-                    {"name":"Preferences","shortcut":null,"highlighted":false},
-                    {"name":"Quit to DOS","shortcut":null,"highlighted":false}
+                    {"name":"Open","shortcut":"F1","highlighted":false,"enabled":true},
+                    {"name":"Save","shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":"Save As","shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true}
                 ]
             },
             {
@@ -29,14 +30,21 @@ class cMenuBar
                 "highlighted": false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":7,
+                "menuysize":8,
                 "options":
                 [
-                    {"name":"Dolomites","shortcut":null,"highlighted":false},
-                    {"name":"Portugal","shortcut":null,"highlighted":false},
-                    {"name":"USA","shortcut":null,"highlighted":false},
-                    {"name":"Rome","shortcut":null,"highlighted":false},
-                    {"name":"Italy","shortcut":null,"highlighted":false}
+                    {"name":"Dolomites","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/seceda.jpg","photoDescr":"Seceda, Dolomites, 2021","photoDimX":50,"photoDimY":35
+                    },
+                    {"name":"Rome","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/colosseum.jpg","photoDescr":"Anfiteatro Flavio, Rome, 2012","photoDimX":90,"photoDimY":35
+                    },
+                    {"name":"Portugal1","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/praia.png","photoDescr":"Somewhere, Portugal, 2024","photoDimX":60,"photoDimY":42},
+                    {"name":"Portugal2","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/lisbona.png","photoDescr":"Lisboa, Portugal, 2024","photoDimX":60,"photoDimY":42},
+                    {"name":"USA","shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":"Italy","shortcut":null,"highlighted":false,"enabled":true}
                 ]
             },
             {
@@ -47,16 +55,29 @@ class cMenuBar
                 "menuysize":12,
                 "options":
                 [
-                    {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV1},
-                    {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV2},
-                    {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV3},
-                    {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV4},
-                    {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV5},
-                    {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV6},
-                    {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV7},
-                    {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openDantonagitV8},
-                    {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openDatunnel},
-                    {"name":"GitHub","shortcut":null,"highlighted":false,"onClickFun":this.openGithub},
+                    {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/index_en.html"
+                    },
+                    {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/v2/index2.html"
+                    },
+                    {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/hpv3/index.html"
+                    },
+                    {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/hpv4/home.html"},
+                    {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"http://www.dantonag.it/hpv5/main.html"},
+                    {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/hpv6/main.html#"},
+                    {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/hpv7/index.html?site=0"},
+                    {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/hpv8/main.html"},
+                    {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://datunnel.blogspot.com/"},
+                    {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://github.com/friol"},
                 ]
             },
             {
@@ -67,10 +88,10 @@ class cMenuBar
                 "menuysize":6,
                 "options":
                 [
-                    {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake},
-                    {"name":"Gioco del 15","shortcut":null,"highlighted":false},
-                    {"name":"Solitario","shortcut":null,"highlighted":false},
-                    {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false},
+                    {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake,"enabled":true},
+                    {"name":"Gioco del 15","shortcut":null,"highlighted":false,"enabled":false},
+                    {"name":"Solitario","shortcut":null,"highlighted":false,"enabled":false},
+                    {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
                 ]
             },
             {
@@ -78,79 +99,54 @@ class cMenuBar
                 "highlighted":false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":3,
+                "menuysize":5,
                 "options":
                 [
-                    {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction},
+                    {"name":"Loader","shortcut":null,"highlighted":false,"onClickFun":this.initialLoader,"enabled":true},
+                    {"name":"DebugWin","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
+                    {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction,"enabled":true},
                 ]
 
             }
         ];
     }
 
-    openDantonagitV1(callerObj)
+    openURL(callerObj)
     {
-        window.open("https://www.dantonag.it/index_en.html", '_blank').focus();
-    }
-
-    openDantonagitV2(callerObj)
-    {
-        window.open("https://www.dantonag.it/v2/index2.html", '_blank').focus();
-    }
-
-    openDantonagitV3(callerObj)
-    {
-        window.open("https://www.dantonag.it/hpv3/index.html", '_blank').focus();
-    }
-
-    openDantonagitV4(callerObj)
-    {
-        window.open("https://www.dantonag.it/hpv4/home.html", '_blank').focus();
-    }
-
-    openDantonagitV5(callerObj)
-    {
-        window.open("http://www.dantonag.it/hpv5/main.html", '_blank').focus();
-    }
-
-    openDantonagitV6(callerObj)
-    {
-        window.open("https://www.dantonag.it/hpv6/main.html#", '_blank').focus();
-    }
-
-    openDantonagitV7(callerObj)
-    {
-        window.open("https://www.dantonag.it/hpv7/index.html?site=0", '_blank').focus();
-    }
-
-    openDantonagitV8(callerObj)
-    {
-        window.open("https://www.dantonag.it/hpv8/main.html", '_blank').focus();
-    }
-
-    openDatunnel(callerObj)
-    {
-        window.open("https://datunnel.blogspot.com/", '_blank').focus();
-    }
-
-    openGithub(callerObj)
-    {
-        window.open("https://github.com/friol", '_blank').focus();
+        window.open(this.siteURL, '_blank').focus();
     }
 
     aboutFunction(callerObj)
     {
         // opens about message box
         var dialogBox=new cAlertBox(true,"OK!",false,"","About dantonag.it",
-            ["dantonag.it v9, created by friol","(c) friol 2024","all rights reserved"],70,9,
-            10,10);
+            ["dantonag.it v9, created by friol","(c) friol 2024","using aalib.js"],70,9,
+            20,20,callerObj.guiPtr);
         callerObj.guiPtr.addComponent(dialogBox);
     }
 
     openSnake(callerObj)
     {
-        var snakeWindow=new cSnakeWindow(10,10,"Snake-y",50,20,"#2020c0");
+        var snakeWindow=new cSnakeWindow(5,9,"Snake-y",50,20,"#2020c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(snakeWindow);
+    }
+
+    initialLoader(callerObj)
+    {
+        var loaderWindow=new cLoader(20,30,"Loading",50,10,"#c02020",callerObj.guiPtr);
+        callerObj.guiPtr.addComponent(loaderWindow);
+    }
+
+    openPhotoWindow(callerObj)
+    {
+        var photowindow=new cPhotoWindow(5,5,"Photo viewer",this.photoDimX,this.photoDimY,"black",this.photoURL,callerObj.guiPtr);
+        callerObj.guiPtr.addComponent(photowindow);
+    }
+
+    debugWindow(callerObj)
+    {
+        var debuggWindow=new cDebugWin(10,10,"Debuggg",50,10,"#c0c0c0",callerObj.guiPtr);
+        callerObj.guiPtr.addComponent(debuggWindow);
     }
 
     handleMessage(msgType,msgPayload)
@@ -215,9 +211,12 @@ class cMenuBar
                         {
                             if (this.menuOptions[mo].options[op].highlighted)
                             {
-                                this.menuOptions[mo].options[op].onClickFun(this);
-                                this.menuOptions[mo].open=false;
-                                break;
+                                if (this.menuOptions[mo].options[op].enabled)
+                                {
+                                    this.menuOptions[mo].options[op].onClickFun(this);
+                                    this.menuOptions[mo].open=false;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -373,17 +372,25 @@ class cMenuBar
                 else
                 {
                     var bgColll="lightgray";
+
                     if (this.menuOptions[mnum].options[mi].highlighted)
                     {
                         fb.drawHorizontalLine(currow,poz,poz+xsz-2,"x","#00A800","#00A800");
                         bgColll="#00A800";
                     }
-                    // first letter
-                    const firstLetter=menuvoice[0];
-                    fb.printString(poz,currow,firstLetter,bgColll,"#A80000");
 
-                    // rest of the string
-                    fb.printString(poz+1,currow,menuvoice.substring(1),bgColll,"black");
+                    if (this.menuOptions[mnum].options[mi].enabled)
+                    {
+                        // first letter
+                        const firstLetter=menuvoice[0];
+                        fb.printString(poz,currow,firstLetter,bgColll,"#A80000");
+                        // rest of the string
+                        fb.printString(poz+1,currow,menuvoice.substring(1),bgColll,"black");
+                    }
+                    else
+                    {
+                        fb.printString(poz,currow,menuvoice,bgColll,"gray");
+                    }
                 }
 
                 currow+=1;

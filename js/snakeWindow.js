@@ -5,9 +5,9 @@
 
 class cSnakeWindow extends cWindow
 {
-    constructor(px,py,title,dimx,dimy,bgColor)
+    constructor(px,py,title,dimx,dimy,bgColor,parentGui)
     {
-        super(px,py,title,dimx,dimy,bgColor);
+        super(px,py,title,dimx,dimy,bgColor,parentGui);
 
         this.updateFreq=4;
         this.updateCounter=this.updateFreq;
@@ -51,8 +51,8 @@ class cSnakeWindow extends cWindow
 
         this.generateRandomFruit();
 
-        this.pauseButton=new cButton(4,this.height-3,"Pause!",this.bgColor,"#00A800","white",this.posx,this.posy,this.onPauseButt,this);
-        this.restartButton=new cButton(20,this.height-3,"Restart!",this.bgColor,"#00A800","white",this.posx,this.posy,this.onRestartButt,this);
+        this.pauseButton=new cButton(4,this.targetHeight-3,"Pause!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onPauseButt,this);
+        this.restartButton=new cButton(38,this.targetHeight-3,"Restart!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onRestartButt,this);
     }
 
     makeSnake()
@@ -81,6 +81,20 @@ class cSnakeWindow extends cWindow
 
     onRestartButt(parent)
     {
+        for (var row=0;row<parent.grid.length;row++)        
+        {
+            for (var col=0;col<parent.grid[row].length;col++)
+            {
+                if (parent.grid[row][col]==2) parent.grid[row][col]=0;
+            }
+        }
+
+        parent.direction=3;
+        parent.growPhase=0;        
+        parent.makeSnake();
+        parent.generateRandomFruit();
+        parent.score=0;
+        parent.gameState=0;
     }
 
     generateRandomFruit()
@@ -111,6 +125,14 @@ class cSnakeWindow extends cWindow
 
     update()
     {
+        super.update();
+
+        if (this.displayPhase==0)
+        {
+            this.pauseButton.updateParentPos(this.posx,this.posy);
+            this.restartButton.updateParentPos(this.posx,this.posy);
+        }
+
         if (this.dragging) return; // no updates when dragging
         if ((this.gameState==1)||(this.gameState==2)) return;
 
@@ -197,6 +219,8 @@ class cSnakeWindow extends cWindow
     draw(fb)
     {
         super.draw(fb);
+
+        if (this.displayPhase==0) return;
 
         fb.printString(this.posx+2,this.posy+1,"Score:"+this.score,this.bgColor,"yellow");
 
