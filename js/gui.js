@@ -9,6 +9,41 @@ class cGui
         this.mouseySquare=0;
     }
 
+    activate()
+    {
+        // turn on the destktop
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if ((this.listOfComponents[cmp].priority==-10000)||(this.listOfComponents[cmp].priority==10000))
+            {
+                //this.listOfComponents[cmp].drawState=1;
+                this.listOfComponents[cmp].drawState=2;
+            }
+        }    
+    }
+
+    quitToDOS()
+    {
+        this.listOfComponents=[];
+        var ds=new cDOSShell();
+        this.listOfComponents.push(ds);
+    }
+
+    isFrontmost(pri)
+    {
+        var maxPri=-10000;
+        for (var cmp=0;cmp<this.listOfComponents.length;cmp++)
+        {
+            if ((this.listOfComponents[cmp].priority>maxPri)&&(this.listOfComponents[cmp].priority!=10000))
+            {
+                maxPri=this.listOfComponents[cmp].priority;
+            }
+        }
+
+        if (pri==maxPri) return true;
+        return false;
+    }
+
     addComponent(c)
     {
         if (c.priority==-1)

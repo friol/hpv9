@@ -7,6 +7,9 @@ class cMenuBar
         this.guiPtr=theGui;
         this.separatorName="*separator*";
         this.priority=10000;
+        this.windowTitle="TheMenuBar";
+        this.drawState=0; // 0: all blacks
+        this.initialAnimCounter=0;
 
         this.menuOptions=[
             {
@@ -17,12 +20,12 @@ class cMenuBar
                 "menuysize":8,
                 "options":
                 [
-                    {"name":"Open","shortcut":"F1","highlighted":false,"enabled":true},
-                    {"name":"Save","shortcut":null,"highlighted":false,"enabled":true},
-                    {"name":"Save As","shortcut":null,"highlighted":false,"enabled":true},
+                    {"name":"Open","shortcut":"F1","highlighted":false,"enabled":false},
+                    {"name":"Save","shortcut":null,"highlighted":false,"enabled":false},
+                    {"name":"Save As","shortcut":null,"highlighted":false,"enabled":false},
                     {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
                     {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true},
-                    {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true}
+                    {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
                 ]
             },
             {
@@ -147,6 +150,13 @@ class cMenuBar
     {
         var debuggWindow=new cDebugWin(10,10,"Debuggg",50,10,"#c0c0c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(debuggWindow);
+    }
+
+    quitToDOS(callerObj)
+    {
+        callerObj.guiPtr.quitToDOS();
+        //var debuggWindow=new cDebugWin(10,10,"Debuggg",50,10,"#c0c0c0",callerObj.guiPtr);
+        //callerObj.guiPtr.addComponent(debuggWindow);
     }
 
     handleMessage(msgType,msgPayload)
@@ -406,10 +416,20 @@ class cMenuBar
 
     update()
     {
+        if (this.drawState==1)
+        {
+            this.initialAnimCounter+=3;
+        }
     }
 
     draw(fb)
     {
+        if (this.drawState==0)
+        {
+            fb.drawHorizontalLine(0,0,fb.numCols,"\u2588","black","black");
+            return;
+        }
+
         // upper menu
         fb.drawHorizontalLine(0,0,fb.numCols,"\u2588","lightgray","lightgray");
 
@@ -458,5 +478,9 @@ class cMenuBar
         const tod=hour.toString().padStart(2,"0")+":"+minute.toString().padStart(2,"0")+":"+second.toString().padStart(2,"0");
         fb.printString(fb.numCols-9,0,tod,"lightgray","black");
 
+        if (this.drawState==1)
+        {
+            fb.drawHorizontalLine(0,this.initialAnimCounter,fb.numCols,"\u2588","black","black");
+        }
     }
 }

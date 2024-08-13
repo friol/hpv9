@@ -100,6 +100,8 @@ class cWindow
 
     draw(fb)
     {
+        var isFrontmost=this.parentGui.isFrontmost(this.priority);
+
         var contourColor="white";
         if (this.dragging) contourColor="#00A800";
 
@@ -114,14 +116,17 @@ class cWindow
         {
             if (row==this.posy)
             {
-                fb.putPixel(row,this.posx,"╔",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx,"╔",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx,"┌",this.bgColor,contourColor);
 
                 for (var col=this.posx+1;col<(this.posx+this.width-1);col++)
                 {
-                    fb.putPixel(row,col,"═",this.bgColor,contourColor);
+                    if (isFrontmost) fb.putPixel(row,col,"═",this.bgColor,contourColor);
+                    else fb.putPixel(row,col,"─",this.bgColor,contourColor); 
                 }
 
-                fb.putPixel(row,this.posx+this.width-1,"╗",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx+this.width-1,"╗",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx+this.width-1,"┐",this.bgColor,contourColor);
 
                 // centered title
                 const titleLen=(" "+this.windowTitle+" ").length;
@@ -135,20 +140,26 @@ class cWindow
             }
             else if (row==(this.posy+this.height-1))
             {
-                fb.putPixel(row,this.posx,"╚",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx,"╚",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx,"└",this.bgColor,contourColor);
 
                 for (var col=this.posx+1;col<(this.posx+this.width-1);col++)
                 {
-                    fb.putPixel(row,col,"═",this.bgColor,contourColor);
+                    if (isFrontmost) fb.putPixel(row,col,"═",this.bgColor,contourColor);
+                    else fb.putPixel(row,col,"─",this.bgColor,contourColor);
                 }
 
-                fb.putPixel(row,this.posx+this.width-1,"╝",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx+this.width-1,"╝",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx+this.width-1,"┘",this.bgColor,contourColor);
                 fb.shadowize(row,this.posx+this.width);
             }
             else
             {
-                fb.putPixel(row,this.posx,"║",this.bgColor,contourColor);
-                fb.putPixel(row,this.posx+this.width-1,"║",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx,"║",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx,"│",this.bgColor,contourColor);
+                if (isFrontmost) fb.putPixel(row,this.posx+this.width-1,"║",this.bgColor,contourColor);
+                else fb.putPixel(row,this.posx+this.width-1,"│",this.bgColor,contourColor);
+                
                 fb.shadowize(row,this.posx+this.width);
             }
         }

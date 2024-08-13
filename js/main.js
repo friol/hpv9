@@ -48,8 +48,18 @@ function mouseMove(evt)
 function myOnClick(evt)
 {
     const rect = document.getElementById("mainDiv").getBoundingClientRect();
-    const mousex=evt.clientX-rect.left;
-    const mousey=evt.clientY-rect.top;
+    var mousex,mousey;
+
+    if (evt.targetTouches)
+    {
+        mousex=evt.targetTouches[0].clientX-rect.left;
+        mousey=evt.targetTouches[0].clientY-rect.top;
+    }
+    else
+    {
+        mousex=evt.clientX-rect.left;
+        mousey=evt.clientY-rect.top;
+    }
 
     glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
 }
@@ -77,9 +87,19 @@ function setup()
     glbGui.addComponent(glbMenuBar);
     glbGui.addComponent(glbStatusBar);
 
+    //const loaderWidth=50; const loaderHeight=10;
+    //const loaderX=(glbFrameBuffer.numCols-loaderWidth)>>1;
+    //const loaderY=(glbFrameBuffer.numRows-loaderHeight)>>1;
+    //var loaderWindow=new cLoader(loaderX,loaderY,"Loading",loaderWidth,loaderHeight,"#c02020",glbGui);
+    //glbGui.addComponent(loaderWindow);
+    glbGui.activate();
+
     document.getElementById("mainDiv").addEventListener("mousemove", mouseMove);
+    document.getElementById("mainDiv").addEventListener("touchmove", mouseMove);
 	document.getElementById("mainDiv").onmousedown=function(e) { myOnClick(e); };
+	document.getElementById("mainDiv").addEventListener("touchstart", myOnClick);
 	document.getElementById("mainDiv").onmouseup=function(e) { mouseUp(e); };
+	document.getElementById("mainDiv").addEventListener("touchend", mouseUp);
 
     document.addEventListener('keydown', function(event) 
     {

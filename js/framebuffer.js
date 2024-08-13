@@ -33,6 +33,12 @@ class cFrameBuffer
         this.shadowMap=[
             ["lightgray","darkgray"],
             ["#0507c0","#0304a0"],
+            ["#c0c0c0","#909090"],
+            ["white","gray"],
+            ["gray","#505050"],
+            ["#2020c0","#1010a0"],
+            ["yellow","olive"],
+            ["#c02020","#901010"]
         ]
     }
 

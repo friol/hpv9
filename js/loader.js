@@ -7,6 +7,7 @@ class cLoader extends cWindow
         super(px,py,title,dimx,dimy,bgColor,parentGui);
 
         this.animCounter=0;
+        this.activationTriggered=false;
     }
 
     handleMessage(msgType,msgPayload)
@@ -31,9 +32,13 @@ class cLoader extends cWindow
             "Loading dantonag.it...",
             "Generating spline coordinates...",
             "Enumerating the universe's atoms...",
-            "Inverting entrophy...",
+            "Inverting entropy...",
             "Defragmenting your hard drive...",
             "Done!",
+            "Done!",
+            "You can close this window now...",
+            "I said you can close it...",
+            "Yep, it's that green square on the left..."
         ]
 
         var tagnum;
@@ -42,7 +47,16 @@ class cLoader extends cWindow
         else if (this.animCounter<300) tagnum=2;
         else if (this.animCounter<400) tagnum=3;
         else if (this.animCounter<500) tagnum=4;
-        else tagnum=5;
+        else if (this.animCounter==500)
+        {
+            this.activationTriggered=true;
+            this.parentGui.activate();
+            tagnum=5;
+        }
+        else if (this.animCounter<600) tagnum=6;
+        else if (this.animCounter<700) tagnum=7;
+        else if (this.animCounter<800) tagnum=8;
+        else tagnum=9;
 
         const cx=(this.width-tags[tagnum].length)>>1;
         const cy=this.height>>1;
