@@ -104,15 +104,21 @@ class cFrameBuffer
             {
                 if ((c!=0)&&((oldFg!=this.framebuffer[r][c].fgColor)||(oldBg!=this.framebuffer[r][c].bgColor)))
                 {
+                    var chr=this.framebuffer[r][c].character;
+                    if (chr=="<") chr="&lt;";
+                    if (chr==">") chr="&gt;";
                     thisLine+="</span><span style=\"color:"+this.framebuffer[r][c].fgColor+
-                        ";background-color:"+this.framebuffer[r][c].bgColor+"\">"+this.framebuffer[r][c].character;
+                        ";background-color:"+this.framebuffer[r][c].bgColor+"\">"+chr;
 
                     oldFg=this.framebuffer[r][c].fgColor;
                     oldBg=this.framebuffer[r][c].bgColor;
                 }
                 else
                 {
-                    thisLine+=this.framebuffer[r][c].character;                
+                    var chr=this.framebuffer[r][c].character;
+                    if (chr=="<") chr="&lt;";
+                    if (chr==">") chr="&gt;";
+                    thisLine+=chr;                
                 }
             }
             theHTML+=thisLine+"</span><br/>";
