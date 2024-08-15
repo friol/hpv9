@@ -7,7 +7,7 @@ class cFrameBuffer
         this.fontxsize=9;
         this.fontysize=16;
 
-        const numCols=Math.floor(windoww/this.fontxsize)-4;
+        const numCols=Math.floor(windoww/this.fontxsize)-2;
         const numRows=Math.floor(windowh/this.fontysize)-4;
 
         console.log("Allocating text framebuffer with "+numRows+" rows and "+numCols+" columns");

@@ -102,11 +102,12 @@ class cMenuBar
                 "highlighted":false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":5,
+                "menuysize":6,
                 "options":
                 [
                     {"name":"Loader","shortcut":null,"highlighted":false,"onClickFun":this.initialLoader,"enabled":true},
                     {"name":"DebugWin","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
+                    {"name":"Help","shortcut":null,"highlighted":false,"onClickFun":this.showHelp,"enabled":true},
                     {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction,"enabled":true},
                 ]
 
@@ -121,10 +122,15 @@ class cMenuBar
 
     aboutFunction(callerObj)
     {
+        function closeMe(callerObj)
+        {
+            this.deletionFlag=true;
+        }
+
         // opens about message box
         var dialogBox=new cAlertBox(true,"OK!",false,"","About dantonag.it",
             ["dantonag.it v9, created by friol","(c) friol 2024","using aalib.js"],70,9,
-            20,20,callerObj.guiPtr);
+            20,20,callerObj.guiPtr,closeMe);
         callerObj.guiPtr.addComponent(dialogBox);
     }
 
@@ -152,11 +158,22 @@ class cMenuBar
         callerObj.guiPtr.addComponent(debuggWindow);
     }
 
+    reallyQuit(callerObj)
+    {
+        //console.log("Quitting"+callerObj);
+        callerObj.quitToDOS();
+    }
+
     quitToDOS(callerObj)
     {
-        callerObj.guiPtr.quitToDOS();
-        //var debuggWindow=new cDebugWin(10,10,"Debuggg",50,10,"#c0c0c0",callerObj.guiPtr);
-        //callerObj.guiPtr.addComponent(debuggWindow);
+        var dialogBox=new cAlertBox(true,"OK!",true,"Cancel","Quit to DOS",["Are you sure?"],40,7,20,20,callerObj.guiPtr,callerObj.reallyQuit);
+        callerObj.guiPtr.addComponent(dialogBox);
+
+        //callerObj.guiPtr.quitToDOS();
+    }
+
+    showHelp(callerObj)
+    {
     }
 
     handleMessage(msgType,msgPayload)

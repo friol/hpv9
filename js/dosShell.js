@@ -2,8 +2,10 @@
 
 class cDOSShell
 {
-    constructor()
+    constructor(parentGui)
     {
+        this.parentGui=parentGui;
+
         this.dirLevel=0;
         this.dirPath=[];
         this.fullPath=["C:"];
@@ -12,10 +14,12 @@ class cDOSShell
             {"filename":"ibm.sys","filesize":"31337","filedate":"31/02/1985","filehour":"13:37","isDirectory":false,"dirContents":null},
             {"filename":"format.com","filesize":"12459","filedate":"13/06/2022","filehour":"12:23","isDirectory":false,"dirContents":null},
             {"filename":"debug.com","filesize":"12459","filedate":"13/06/2022","filehour":"12:23","isDirectory":false,"dirContents":null},
+            {"filename":"autoexec.bat","filesize":"34","filedate":"15/08/2024","filehour":"11:20","isDirectory":false,"dirContents":null},
+            {"filename":"readme.txt","filesize":"1024","filedate":"15/08/2024","filehour":"13:37","isDirectory":false,"dirContents":null,"fileContents":0},
             {"filename":"hpv9.exe","filesize":"13082024","filedate":"13/08/2024","filehour":"14:05","isDirectory":false,"dirContents":null},
-            {"filename":"test","filesize":"0","filedate":"13/08/2024","filehour":"14:05","isDirectory":true,"dirContents":
+            {"filename":"s3cret","filesize":"0","filedate":"13/08/2024","filehour":"14:05","isDirectory":true,"dirContents":
                 [
-                    {"filename":"readme.txt","filesize":"124","filedate":"13/06/2022","filehour":"12:23","isDirectory":false,"dirContents":null},
+                    {"filename":"serial.txt","filesize":"124","filedate":"13/06/2022","filehour":"12:23","isDirectory":false,"dirContents":null,"fileContents":1},
                     {"filename":"virus.com","filesize":"1024","filedate":"13/08/2024","filehour":"14:05","isDirectory":false,"dirContents":null},
                 ]
             },
@@ -23,7 +27,25 @@ class cDOSShell
                 [
                     {"filename":"lenna.jpg","filesize":"29993","filedate":"01/02/1970","filehour":"21:22","isDirectory":false,"dirContents":null},
                 ]
-            }
+            },
+            {"filename":"games","filesize":"0","filedate":"04/01/1985","filehour":"19:34","isDirectory":true,"dirContents":
+                [
+                    {"filename":"alleycat.exe","filesize":"54123","filedate":"01/02/1970","filehour":"01:02","isDirectory":false,"dirContents":null},
+                    {"filename":"arkanoid.exe","filesize":"129823","filedate":"01/02/1980","filehour":"09:22","isDirectory":false,"dirContents":null},
+                    {"filename":"bugs!.exe","filesize":"23174","filedate":"03/05/1976","filehour":"09:35","isDirectory":false,"dirContents":null},
+                    {"filename":"doom.exe","filesize":"715493","filedate":"03/06/1993","filehour":"19:12","isDirectory":false,"dirContents":null},
+                ]
+            },
+            {"filename":"atest.txt","filesize":"2048","filedate":"15/08/2024","filehour":"23:31","isDirectory":false,"dirContents":null,"fileContents":2},
+        ];
+
+        this.fileContents=[
+            "Welcome to the DOS shell of dantonag.it. You are experiencing a faithful rendition of the old character-based interface "+
+            "borrowed from Tim Paterson for 25.000 dollars, and then sold to small computer companies like IBM for trillions. " +
+            "But however, if you are reading this you already opened this file and you probably know all the story and all the commands. "+
+            "Be sure to check all the directories of dantonag.it too. End of the message. Friol signin' off.",
+            "WVXHN-86M7X-466P6-ZHXV7-AY726",
+            "That little .txt file that nobody notices but has the key to the secret part of the website inside. Nah, just joking."
         ];
 
         this.curRow=4;
@@ -58,6 +80,10 @@ class cDOSShell
             else if (key==" ")
             {
                 this.curCommand+=" ";
+            }
+            else if (key==".")
+            {
+                this.curCommand+=".";
             }
             else if (key=="Enter")
             {
@@ -104,7 +130,6 @@ class cDOSShell
         this.listOfRows.push(this.getCurrentPath()+">");
 
         this.curRow+=4;
-        this.eventualScroll();
     }
 
     unknownCommand()
@@ -115,7 +140,6 @@ class cDOSShell
         this.listOfRows.push(this.getCurrentPath()+">");
 
         this.curRow+=4;
-        this.eventualScroll();
     }
 
     showCurrentDir()
@@ -179,19 +203,42 @@ class cDOSShell
         this.listOfRows.push("");
         this.listOfRows.push(" Volume in drive C is THEOIL");
         this.listOfRows.push(" Volume Serial Number is 1337-D00D");
-        this.listOfRows.push(" Directory of C:\\");
+        this.listOfRows.push(" Directory of "+this.getCurrentPath());
         this.listOfRows.push("");
         var additionalRows=this.showCurrentDir();
         this.listOfRows.push("");
         this.listOfRows.push(this.getCurrentPath()+">");
 
         this.curRow+=7+additionalRows;
-        this.eventualScroll();
     }
 
     executeCd(dir2cd2)
     {
         console.log("Trying to cd to directory "+dir2cd2);
+
+        // special cases
+        if (dir2cd2=="..")
+        {
+            // special case, go up one level, if possible
+            if (this.dirLevel>0) this.dirLevel-=1;
+            this.dirPath.pop();
+            this.fullPath.pop();
+    
+            this.listOfRows.push("");
+            this.listOfRows.push(this.getCurrentPath()+">");
+    
+            this.curRow+=2;
+            return;
+        }
+        else if (dir2cd2=="")
+        {
+            this.listOfRows.push(this.getCurrentPath());
+            this.listOfRows.push("");
+            this.listOfRows.push(this.getCurrentPath()+">");
+    
+            this.curRow+=3;
+            return;
+        }
 
         var dirPtr=this.dirData;
         var lev=0;
@@ -220,7 +267,6 @@ class cDOSShell
             this.listOfRows.push(this.getCurrentPath()+">");
     
             this.curRow+=4;
-            this.eventualScroll();
             return;
         }
 
@@ -229,12 +275,79 @@ class cDOSShell
         this.fullPath.push(dir2cd2);
 
         this.listOfRows.push("");
-        this.listOfRows.push("cd cmd "+dir2cd2);
-        this.listOfRows.push("");
         this.listOfRows.push(this.getCurrentPath()+">");
 
-        this.curRow+=4;
-        this.eventualScroll();
+        this.curRow+=2;
+    }
+
+    splitMultipleRows(str,maxChars)
+    {
+        var numLines=0;
+        var wordArr=str.split(" ");
+        var curLine=wordArr[0];
+        for (var w=1;w<wordArr.length;w++)
+        {
+            if ((curLine+" "+wordArr[w]).length<maxChars)
+            {
+                curLine+=" "+wordArr[w];
+            }
+            else
+            {
+                this.listOfRows.push(curLine);
+                curLine=wordArr[w];
+                numLines+=1;
+            }
+        }
+
+        this.listOfRows.push(curLine);
+
+        return numLines+1;
+    }
+
+    executeType(fname)
+    {
+        var dirPtr=this.dirData;
+        var lev=0;
+        for (var l=0;l<this.dirLevel;l++)        
+        {
+            dirPtr=dirPtr[this.dirPath[l]]["dirContents"];
+        }
+
+        var found=false;
+        var fileIdx=-1;
+        for (var f=0;f<dirPtr.length;f++)
+        {
+            if ((dirPtr[f].filename==fname))
+            {
+                console.log("found");
+                found=true;
+                fileIdx=dirPtr[f].fileContents;
+            }
+        }
+
+        if (!found)
+        {
+            this.listOfRows.push("File "+fname+" not found.");
+            this.listOfRows.push("");
+            this.listOfRows.push(this.getCurrentPath()+">");
+            this.curRow+=3;
+            return;
+        }
+
+        this.listOfRows.push("");
+        var numAdditionalRows=this.splitMultipleRows(this.fileContents[fileIdx],50);
+
+        this.listOfRows.push("");
+        this.listOfRows.push(this.getCurrentPath()+">");
+        this.curRow+=3+numAdditionalRows;
+    }
+
+    executeCls()
+    {
+        this.listOfRows=[];
+        this.listOfRows.push("");
+        this.listOfRows.push(this.getCurrentPath()+">");
+        this.curRow=1;
     }
 
     executeCommand()
@@ -252,21 +365,54 @@ class cDOSShell
         {
             this.executeDir();
         }
+        else if (cmd=="xyzzy")
+        {
+            this.listOfRows.push("");
+            this.listOfRows.push("A hollow voice says 'fool'");
+            this.listOfRows.push("");
+            this.listOfRows.push(this.getCurrentPath()+">");
+            this.curRow+=4;
+        }
+        else if (cmd=="cls")
+        {
+            this.executeCls();
+        }
+        else if ((cmd=="hpv9")||(cmd=="hpv9.exe"))
+        {
+            if (this.dirLevel!=0)            
+            {
+                this.listOfRows.push("");
+                this.listOfRows.push("hpv9 not found here");
+                this.listOfRows.push("");
+                this.listOfRows.push(this.getCurrentPath()+">");
+                this.curRow+=4;
+            }
+            else
+            {
+                this.parentGui.listOfComponents=[];
+                this.parentGui.initialSetup(true);                
+            }
+        }
         else if (cmd.substring(0,2)=="cd")
         {
             this.executeCd(cmd.substring(3));
+        }
+        else if ((cmd.substring(0,4)=="type")||(cmd.substring(0,4)=="more"))
+        {
+            this.executeType(cmd.substring(5));
         }
         else if (cmd=="")
         {
             this.listOfRows.push("");
             this.listOfRows.push(this.getCurrentPath()+">");
             this.curRow+=2;
-            this.eventualScroll();
         }
         else
         {
             this.unknownCommand();
         }
+
+        this.eventualScroll();
     }
 
     writeToConsole(s,fb,r)

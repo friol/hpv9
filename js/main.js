@@ -1,9 +1,9 @@
 /* welcome back to MS-DOS */
 
 var glbGui;
-var glbDesktop;
-var glbMenuBar;
-var glbStatusBar;
+//var glbDesktop;
+//var glbMenuBar;
+//var glbStatusBar;
 
 var glbFrameBuffer;
 
@@ -80,12 +80,6 @@ function setup()
     glbFrameBuffer=new cFrameBuffer(w,h,"mainDiv");
 
     glbGui=new cGui();
-    glbDesktop=new cDesktop();
-    glbGui.addComponent(glbDesktop);
-    glbMenuBar=new cMenuBar(glbGui);
-    glbStatusBar=new cStatusBar(glbGui);
-    glbGui.addComponent(glbMenuBar);
-    glbGui.addComponent(glbStatusBar);
 
     //const loaderWidth=50; const loaderHeight=10;
     //const loaderX=(glbFrameBuffer.numCols-loaderWidth)>>1;

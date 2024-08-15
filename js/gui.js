@@ -7,6 +7,26 @@ class cGui
         this.listOfComponents=new Array();
         this.mousexSquare=0;
         this.mouseySquare=0;
+
+        this.initialSetup(false);
+    }
+
+    initialSetup(reinit)
+    {
+        var glbDesktop=new cDesktop();
+        var glbMenuBar=new cMenuBar(this);
+        var glbStatusBar=new cStatusBar(this);
+
+        if (reinit)
+        {
+            glbDesktop.drawState=1;
+            glbMenuBar.drawState=1;
+            glbStatusBar.drawState=1;
+        }
+
+        this.addComponent(glbDesktop);
+        this.addComponent(glbMenuBar);
+        this.addComponent(glbStatusBar);        
     }
 
     activate()
@@ -25,7 +45,7 @@ class cGui
     quitToDOS()
     {
         this.listOfComponents=[];
-        var ds=new cDOSShell();
+        var ds=new cDOSShell(this);
         this.listOfComponents.push(ds);
     }
 
@@ -151,6 +171,35 @@ class cGui
         }
     }
 
+    invert(col)
+    {
+        col=col.substring(1);
+        var r=parseInt(col.substring(0,2),16);
+        var g=parseInt(col.substring(2,4),16);
+        var b=parseInt(col.substring(4,6),16);
+
+        var ir=255-r; var ig=255-g; var ib=255-b;
+
+        return "#"+ir.toString(16).padStart(2,0)+ig.toString(16).padStart(2,0)+ib.toString(16).padStart(2,0);
+    }
+
+    drawMouseCursor(fb)
+    {
+        const fgcol=fb.framebuffer[this.mouseySquare][this.mousexSquare].fgColor;
+        const bgcol=fb.framebuffer[this.mouseySquare][this.mousexSquare].bgColor;
+
+        var ctx = document.createElement('canvas').getContext('2d');
+        ctx.fillStyle = fgcol;
+        const hexFgCol=ctx.fillStyle;
+
+        ctx.fillStyle = bgcol;
+        const hexBgCol=ctx.fillStyle;
+        
+        fb.framebuffer[this.mouseySquare][this.mousexSquare].fgColor=this.invert(hexFgCol);
+        fb.framebuffer[this.mouseySquare][this.mousexSquare].bgColor=this.invert(hexBgCol);
+        //fb.framebuffer[this.mouseySquare][this.mousexSquare].character="x";
+    }
+
     draw(fb)
     {
         this.listOfComponents.forEach(element => 
@@ -159,8 +208,6 @@ class cGui
         });
 
         // draw mouse
-        fb.framebuffer[this.mouseySquare][this.mousexSquare].character="\u2588";
-        fb.framebuffer[this.mouseySquare][this.mousexSquare].bgColor="lightgray";
-        fb.framebuffer[this.mouseySquare][this.mousexSquare].fgColor="yellow";
+        this.drawMouseCursor(fb);
     }
 }
