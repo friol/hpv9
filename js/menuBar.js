@@ -46,8 +46,10 @@ class cMenuBar
                         "photoURL":"./img/photos/praia.png","photoDescr":"Somewhere, Portugal, 2024","photoDimX":60,"photoDimY":42},
                     {"name":"Portugal2","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
                         "photoURL":"./img/photos/lisbona.png","photoDescr":"Lisboa, Portugal, 2024","photoDimX":60,"photoDimY":42},
-                    {"name":"USA","shortcut":null,"highlighted":false,"enabled":true},
-                    {"name":"Italy","shortcut":null,"highlighted":false,"enabled":true}
+                    {"name":"USA","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/mac.png","photoDescr":"Some McDonald, 2019","photoDimX":50,"photoDimY":30},
+                    {"name":"Italy","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                        "photoURL":"./img/photos/idaley.png","photoDescr":"Le cinque terre, 2017","photoDimX":50,"photoDimY":30}
                 ]
             },
             {
@@ -55,7 +57,7 @@ class cMenuBar
                 "highlighted": false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":12,
+                "menuysize":11,
                 "options":
                 [
                     {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
@@ -79,8 +81,22 @@ class cMenuBar
                         "siteURL":"https://www.dantonag.it/hpv8/main.html"},
                     {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                         "siteURL":"https://datunnel.blogspot.com/"},
+                ]
+            },
+            {
+                "name":"Code",
+                "highlighted": false,
+                "open":false,
+                "menuxsize":30,
+                "menuysize":5,
+                "options":
+                [
                     {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                         "siteURL":"https://github.com/friol"},
+                    {"name":"shadertoy","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.shadertoy.com/user/friol"},
+                    {"name":"Cloud Basic","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"http://www.dantonag.it/basicjs/basicjs.html"},
                 ]
             },
             {
@@ -88,12 +104,19 @@ class cMenuBar
                 "highlighted": false,
                 "open":false,
                 "menuxsize":30,
-                "menuysize":6,
+                "menuysize":7,
                 "options":
                 [
                     {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake,"enabled":true},
-                    {"name":"Gioco del 15","shortcut":null,"highlighted":false,"enabled":false},
-                    {"name":"Solitario","shortcut":null,"highlighted":false,"enabled":false},
+                    {"name":"Bubble Canvas","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/bubbleCanvas/bubbleCanvas.html"
+                    },
+                    {"name":"Blockz","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/blockz/blockz.html"
+                    },
+                    {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                        "siteURL":"https://www.dantonag.it/tetris/tetris.html"
+                    },
                     {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
                 ]
             },
@@ -128,9 +151,14 @@ class cMenuBar
         }
 
         // opens about message box
-        var dialogBox=new cAlertBox(true,"OK!",false,"","About dantonag.it",
-            ["dantonag.it v9, created by friol","(c) friol 2024","using aalib.js"],70,9,
-            20,20,callerObj.guiPtr,closeMe);
+
+        const title="About dantonag.it";
+        const px=(callerObj.guiPtr.fbPtr.numCols-70)>>1;
+        const py=(callerObj.guiPtr.fbPtr.numRows-9)>>1;
+
+        var dialogBox=new cAlertBox(true,"OK!",false,"",title,
+            ["dantonag.it v9, created by friol","(c) friol 2024","using aalib.js and hammer.js"],70,9,
+            px,py,callerObj.guiPtr,closeMe);
         callerObj.guiPtr.addComponent(dialogBox);
     }
 
@@ -166,14 +194,17 @@ class cMenuBar
 
     quitToDOS(callerObj)
     {
-        var dialogBox=new cAlertBox(true,"OK!",true,"Cancel","Quit to DOS",["Are you sure?"],40,7,20,20,callerObj.guiPtr,callerObj.reallyQuit);
-        callerObj.guiPtr.addComponent(dialogBox);
+        const px=(callerObj.guiPtr.fbPtr.numCols-40)>>1;
+        const py=(callerObj.guiPtr.fbPtr.numRows-7)>>1;
 
-        //callerObj.guiPtr.quitToDOS();
+        var dialogBox=new cAlertBox(true,"Yes!",true,"Not really","Quit to DOS",["Are you sure?"],40,7,px,py,callerObj.guiPtr,callerObj.reallyQuit);
+        callerObj.guiPtr.addComponent(dialogBox);
     }
 
     showHelp(callerObj)
     {
+        var helpWin=new cHelpWindow(5,9,"Help",50,20,"#2020c0",callerObj.guiPtr);
+        callerObj.guiPtr.addComponent(helpWin);
     }
 
     handleMessage(msgType,msgPayload)

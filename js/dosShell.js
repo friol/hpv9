@@ -34,6 +34,7 @@ class cDOSShell
                     {"filename":"arkanoid.exe","filesize":"129823","filedate":"01/02/1980","filehour":"09:22","isDirectory":false,"dirContents":null},
                     {"filename":"bugs!.exe","filesize":"23174","filedate":"03/05/1976","filehour":"09:35","isDirectory":false,"dirContents":null},
                     {"filename":"doom.exe","filesize":"715493","filedate":"03/06/1993","filehour":"19:12","isDirectory":false,"dirContents":null},
+                    {"filename":"readme.txt","filesize":"256","filedate":"16/08/2024","filehour":"08:37","isDirectory":false,"dirContents":null,"fileContents":3},
                 ]
             },
             {"filename":"atest.txt","filesize":"2048","filedate":"15/08/2024","filehour":"23:31","isDirectory":false,"dirContents":null,"fileContents":2},
@@ -45,7 +46,8 @@ class cDOSShell
             "But however, if you are reading this you already opened this file and you probably know all the story and all the commands. "+
             "Be sure to check all the directories of dantonag.it too. End of the message. Friol signin' off.",
             "WVXHN-86M7X-466P6-ZHXV7-AY726",
-            "That little .txt file that nobody notices but has the key to the secret part of the website inside. Nah, just joking."
+            "That little .txt file that nobody notices but has the key to the secret part of the website. Nah, just joking.",
+            "Those don't really run. Next time I'll do an entire DOS emulator in javascript, I promise."
         ];
 
         this.curRow=4;

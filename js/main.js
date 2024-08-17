@@ -1,10 +1,6 @@
 /* welcome back to MS-DOS */
 
 var glbGui;
-//var glbDesktop;
-//var glbMenuBar;
-//var glbStatusBar;
-
 var glbFrameBuffer;
 
 // fps calculon
@@ -43,25 +39,8 @@ function mouseMove(evt)
 
     glbGui.storeMousePos(mousex,mousey,glbFrameBuffer);
     glbGui.handleMessage(messageTypesEnum.MSG_MOUSEMOVE,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
-}
 
-function myOnClick(evt)
-{
-    const rect = document.getElementById("mainDiv").getBoundingClientRect();
-    var mousex,mousey;
-
-    if (evt.targetTouches)
-    {
-        mousex=evt.targetTouches[0].clientX-rect.left;
-        mousey=evt.targetTouches[0].clientY-rect.top;
-    }
-    else
-    {
-        mousex=evt.clientX-rect.left;
-        mousey=evt.clientY-rect.top;
-    }
-
-    glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+    //console.log("mousemove");
 }
 
 function mouseUp(evt)
@@ -71,6 +50,7 @@ function mouseUp(evt)
     const mousey=evt.clientY-rect.top;
 
     glbGui.handleMessage(messageTypesEnum.MSG_MOUSEUNCLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+    //console.log("mouseup");
 }
 
 function setup()
@@ -79,7 +59,7 @@ function setup()
     var h = window.innerHeight;
     glbFrameBuffer=new cFrameBuffer(w,h,"mainDiv");
 
-    glbGui=new cGui();
+    glbGui=new cGui(glbFrameBuffer);
 
     //const loaderWidth=50; const loaderHeight=10;
     //const loaderX=(glbFrameBuffer.numCols-loaderWidth)>>1;
@@ -88,12 +68,59 @@ function setup()
     //glbGui.addComponent(loaderWindow);
     glbGui.activate();
 
+    var hammertime = new Hammer(document.getElementById("mainDiv"), {});
+
+    hammertime.on('tap', function(ev) 
+    {
+        if (ev.pointerType=="mouse") return;
+
+        const rect = document.getElementById("mainDiv").getBoundingClientRect();
+        var tapx,tapy;
+    
+        tapx=ev.center.x-rect.left;
+        tapy=ev.center.y-rect.top;
+    
+        glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(tapx/glbFrameBuffer.fontxsize),Math.floor(tapy/glbFrameBuffer.fontysize)]);
+        //console.log("tap");
+    });
+
+    hammertime.on("hammer.input", function(ev) {
+        if ((ev.pointerType=="mouse")&&(ev.pointers[0].type=="pointerdown"))
+        {
+            const rect = document.getElementById("mainDiv").getBoundingClientRect();
+            var mousex,mousey;
+        
+            mousex=ev.center.x-rect.left;
+            mousey=ev.center.y-rect.top;
+        
+            glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+            //console.log("hammer mouse click");
+        }
+     });
+
+    hammertime.on('pan', function(ev) 
+    {
+        if (ev.pointerType=="mouse") return;
+
+        const rect = document.getElementById("mainDiv").getBoundingClientRect();
+        var mousex,mousey;
+    
+        mousex=ev.center.x-rect.left;
+        mousey=ev.center.y-rect.top;
+
+        if (!ev.isFinal) 
+        {
+            glbGui.handleMessage(messageTypesEnum.MSG_MOUSECLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+        }
+        else glbGui.handleMessage(messageTypesEnum.MSG_MOUSEUNCLICK,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+
+        glbGui.handleMessage(messageTypesEnum.MSG_MOUSEMOVE,[Math.floor(mousex/glbFrameBuffer.fontxsize),Math.floor(mousey/glbFrameBuffer.fontysize)]);
+
+        console.log(ev);
+    });
+
     document.getElementById("mainDiv").addEventListener("mousemove", mouseMove);
-    document.getElementById("mainDiv").addEventListener("touchmove", mouseMove);
-	document.getElementById("mainDiv").onmousedown=function(e) { myOnClick(e); };
-	document.getElementById("mainDiv").addEventListener("touchstart", myOnClick);
-	document.getElementById("mainDiv").onmouseup=function(e) { mouseUp(e); };
-	document.getElementById("mainDiv").addEventListener("touchend", mouseUp);
+    document.getElementById("mainDiv").onmouseup=function(e) { mouseUp(e); };
 
     document.addEventListener('keydown', function(event) 
     {

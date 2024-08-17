@@ -2,11 +2,12 @@
 
 class cGui
 {
-    constructor()
+    constructor(fb)
     {
         this.listOfComponents=new Array();
         this.mousexSquare=0;
         this.mouseySquare=0;
+        this.fbPtr=fb;
 
         this.initialSetup(false);
     }

@@ -18,18 +18,18 @@ class cAlertBox extends cWindow
         {
             const txtLen=this.okButtonText.length;
             var horzPos=((dimx-txtLen)>>1);
-            if (this.hasCancelButton) horzPos-=5;
+            if (this.hasCancelButton) horzPos-=7;
             const vertPos=this.windowText.length+3;
-            this.okButton=new cButton(horzPos,vertPos,this.okButtonText,"#b0b0b0","#00A800","white",this.posx,this.posy,this.onOkButt,this);
+            this.okButton=new cButton(horzPos,vertPos,this.okButtonText,bgColor,"#00A800","white",this.posx,this.posy,this.onOkButt,this);
         }
 
         if (this.hasCancelButton)
         {
             const txtLen=this.cancelButtonText.length;
             var horzPos=((dimx-txtLen)>>1);
-            if (this.hasOkButton) horzPos+=5;
+            if (this.hasOkButton) horzPos+=7;
             const vertPos=this.windowText.length+3;
-            this.cancelButton=new cButton(horzPos,vertPos,this.cancelButtonText,"#b0b0b0","#00A800","white",this.posx,this.posy,this.onCancelButt,this);
+            this.cancelButton=new cButton(horzPos,vertPos,this.cancelButtonText,bgColor,"#A80000","white",this.posx,this.posy,this.onCancelButt,this);
         }
     }
 
