@@ -2,7 +2,7 @@
 
 class cMenuBar
 {
-    constructor(theGui)
+    constructor(theGui,isMobile)
     {
         this.guiPtr=theGui;
         this.separatorName="*separator*";
@@ -11,131 +11,174 @@ class cMenuBar
         this.drawState=0; // 0: all blacks
         this.initialAnimCounter=0;
 
-        this.menuOptions=[
-            {
-                "name":"File",
-                "highlighted": false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":8,
-                "options":
-                [
-                    {"name":"Open","shortcut":"F1","highlighted":false,"enabled":false},
-                    {"name":"Save","shortcut":null,"highlighted":false,"enabled":false},
-                    {"name":"Save As","shortcut":null,"highlighted":false,"enabled":false},
-                    {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
-                    {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true},
-                    {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
-                ]
-            },
-            {
-                "name":"Photos",
-                "highlighted": false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":8,
-                "options":
-                [
-                    {"name":"Dolomites","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/seceda.jpg","photoDescr":"Seceda, Dolomites, 2021","photoDimX":50,"photoDimY":35
-                    },
-                    {"name":"Rome","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/colosseum.jpg","photoDescr":"Anfiteatro Flavio, Rome, 2012","photoDimX":90,"photoDimY":35
-                    },
-                    {"name":"Portugal1","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/praia.png","photoDescr":"Somewhere, Portugal, 2024","photoDimX":60,"photoDimY":42},
-                    {"name":"Portugal2","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/lisbona.png","photoDescr":"Lisboa, Portugal, 2024","photoDimX":60,"photoDimY":42},
-                    {"name":"USA","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/mac.png","photoDescr":"Some McDonald, 2019","photoDimX":50,"photoDimY":30},
-                    {"name":"Italy","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
-                        "photoURL":"./img/photos/idaley.png","photoDescr":"Le cinque terre, 2017","photoDimX":50,"photoDimY":30}
-                ]
-            },
-            {
-                "name":"Archive",
-                "highlighted": false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":11,
-                "options":
-                [
-                    {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/index_en.html"
-                    },
-                    {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/v2/index2.html"
-                    },
-                    {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/hpv3/index.html"
-                    },
-                    {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/hpv4/home.html"},
-                    {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"http://www.dantonag.it/hpv5/main.html"},
-                    {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/hpv6/main.html#"},
-                    {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/hpv7/index.html?site=0"},
-                    {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/hpv8/main.html"},
-                    {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://datunnel.blogspot.com/"},
-                ]
-            },
-            {
-                "name":"Code",
-                "highlighted": false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":5,
-                "options":
-                [
-                    {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://github.com/friol"},
-                    {"name":"shadertoy","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.shadertoy.com/user/friol"},
-                    {"name":"Cloud Basic","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"http://www.dantonag.it/basicjs/basicjs.html"},
-                ]
-            },
-            {
-                "name":"Games",
-                "highlighted": false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":7,
-                "options":
-                [
-                    {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake,"enabled":true},
-                    {"name":"Bubble Canvas","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/bubbleCanvas/bubbleCanvas.html"
-                    },
-                    {"name":"Blockz","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/blockz/blockz.html"
-                    },
-                    {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
-                        "siteURL":"https://www.dantonag.it/tetris/tetris.html"
-                    },
-                    {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
-                ]
-            },
-            {
-                "name":"About",
-                "highlighted":false,
-                "open":false,
-                "menuxsize":30,
-                "menuysize":6,
-                "options":
-                [
-                    {"name":"Loader","shortcut":null,"highlighted":false,"onClickFun":this.initialLoader,"enabled":true},
-                    {"name":"DebugWin","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
-                    {"name":"Help","shortcut":null,"highlighted":false,"onClickFun":this.showHelp,"enabled":true},
-                    {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction,"enabled":true},
-                ]
+        if (isMobile)
+        {
+            this.menuOptions=[
+                {
+                    "name":"File",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":16,
+                    "options":
+                    [
+                        {"name":"Open","shortcut":"F1","highlighted":false,"enabled":false},
+                        {"name":"Save","shortcut":null,"highlighted":false,"enabled":false},
+                        {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
+                        {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/index_en.html"
+                        },
+                        {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/v2/index2.html"
+                        },
+                        {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv3/index.html"
+                        },
+                        {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv4/home.html"},
+                        {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"http://www.dantonag.it/hpv5/main.html"},
+                        {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv6/main.html#"},
+                        {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv7/index.html?site=0"},
+                        {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv8/main.html"},
+                        {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://datunnel.blogspot.com/"},
+                        {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
+                        {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
+                    ]
+                }
+            ];
+        }
+        else
+        {
+            this.menuOptions=[
+                {
+                    "name":"File",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":8,
+                    "options":
+                    [
+                        {"name":"Open","shortcut":"F1","highlighted":false,"enabled":false},
+                        {"name":"Save","shortcut":null,"highlighted":false,"enabled":false},
+                        {"name":"Save As","shortcut":null,"highlighted":false,"enabled":false},
+                        {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
+                        {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true},
+                        {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
+                    ]
+                },
+                {
+                    "name":"Photos",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":8,
+                    "options":
+                    [
+                        {"name":"Dolomites","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/seceda.jpg","photoDescr":"Seceda, Dolomites, 2021","photoDimX":50,"photoDimY":35
+                        },
+                        {"name":"Rome","shortcut":null,"highlighted":false,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/colosseum.jpg","photoDescr":"Anfiteatro Flavio, Rome, 2012","photoDimX":90,"photoDimY":35
+                        },
+                        {"name":"Portugal1","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/praia.png","photoDescr":"Somewhere, Portugal, 2024","photoDimX":60,"photoDimY":42},
+                        {"name":"Portugal2","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/lisbona.png","photoDescr":"Lisboa, Portugal, 2024","photoDimX":60,"photoDimY":42},
+                        {"name":"USA","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/mac.png","photoDescr":"Some McDonald, 2019","photoDimX":50,"photoDimY":30},
+                        {"name":"Italy","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.openPhotoWindow,"enabled":true,
+                            "photoURL":"./img/photos/idaley.png","photoDescr":"Le cinque terre, 2017","photoDimX":50,"photoDimY":30}
+                    ]
+                },
+                {
+                    "name":"Archive",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":11,
+                    "options":
+                    [
+                        {"name":"dantonag.it v1","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/index_en.html"
+                        },
+                        {"name":"dantonag.it v2","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/v2/index2.html"
+                        },
+                        {"name":"dantonag.it v3","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv3/index.html"
+                        },
+                        {"name":"dantonag.it v4","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv4/home.html"},
+                        {"name":"dantonag.it v5","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"http://www.dantonag.it/hpv5/main.html"},
+                        {"name":"dantonag.it v6","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv6/main.html#"},
+                        {"name":"dantonag.it v7","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv7/index.html?site=0"},
+                        {"name":"dantonag.it v8","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/hpv8/main.html"},
+                        {"name":"datunnel","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://datunnel.blogspot.com/"},
+                    ]
+                },
+                {
+                    "name":"Code",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":5,
+                    "options":
+                    [
+                        {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://github.com/friol"},
+                        {"name":"shadertoy","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.shadertoy.com/user/friol"},
+                        {"name":"Cloud Basic","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"http://www.dantonag.it/basicjs/basicjs.html"},
+                    ]
+                },
+                {
+                    "name":"Games",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":7,
+                    "options":
+                    [
+                        {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake,"enabled":true},
+                        {"name":"Bubble Canvas","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/bubbleCanvas/bubbleCanvas.html"
+                        },
+                        {"name":"Blockz","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/blockz/blockz.html"
+                        },
+                        {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/tetris/tetris.html"
+                        },
+                        {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
+                    ]
+                },
+                {
+                    "name":"About",
+                    "highlighted":false,
+                    "open":false,
+                    "menuxsize":30,
+                    "menuysize":5,
+                    "options":
+                    [
+                        {"name":"DebugWin","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
+                        {"name":"Help","shortcut":null,"highlighted":false,"onClickFun":this.showHelp,"enabled":true},
+                        {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction,"enabled":true},
+                    ]
 
-            }
-        ];
+                }
+            ];
+        }
     }
 
     openURL(callerObj)
@@ -168,11 +211,11 @@ class cMenuBar
         callerObj.guiPtr.addComponent(snakeWindow);
     }
 
-    initialLoader(callerObj)
+    /*initialLoader(callerObj)
     {
         var loaderWindow=new cLoader(20,30,"Loading",50,10,"#c02020",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(loaderWindow);
-    }
+    }*/
 
     openPhotoWindow(callerObj)
     {
@@ -335,6 +378,15 @@ class cMenuBar
                 }
             }
 
+        }
+        else if (msgType==messageTypesEnum.MSG_KEYDOWN)
+        {
+            const k=msgPayload[0];
+            if (k=="F1")
+            {
+                var helpWin=new cHelpWindow(5,9,"Help",50,26,"#2020c0",this.guiPtr);
+                this.guiPtr.addComponent(helpWin);
+            }
         }
     }
 

@@ -35,7 +35,7 @@ class cHelpWindow extends cWindow
         "is that you can always <link_href='0'> start_again </link> .",
 
         "<br> Hmmm, now that I think of it, you were seeking for help "+
-        "and you have somehow been teleported instead in a medieval setting with monsters and hyperlinks. <br> <br> "+
+        "and you have somehow been teleported instead in a medieval world with monsters and hyperlinks. <br> <br> "+
         "If you think today is not the right day for an adventure, feel free to safely return to the <link_href='0'> homepage </link> ."+
         "Instead, if you feel brave, you can turn back and try to <link_href='2'> attack_the_monster </link> or walk "+
         "towards an <link_href='4'> old_house </link> that has smoke coming from its chimney and a nice green roof.",
@@ -51,9 +51,9 @@ class cHelpWindow extends cWindow
         "is that you can always <link_href='0'> start_again </link> .",
 
         "<br> You enter the bookshelf room, and there is a old, dusty (and rusty) book "+
-        "on the desk, whose title seems to be 'Hypertexts, Volume I. You slowly open it, and "+
-        "immediately notice a paragraph that start with the sentence: 'If you need help, press F1'. <br> <br>"+
-        "A big pink link-like word lies underneath, and it says <link_href='0'> Home </link> ."
+        "on the desk, whose title seems to be 'Hypertexts, Volume I'. <br> <br> You slowly open it, and "+
+        "immediately notice a paragraph that starts with the sentence: 'If you need help, press F1'. <br> <br>"+
+        "A big pink link-like word lies underneath, and it says <br> <br> <link_href='0'> Home </link> ."
         ];
 
         this.currentText=0;

@@ -8,5 +8,14 @@
 
 html
 {
-    font-family: mainfont
+    font-family: mainfont;
+    margin:0;
+    padding:0;
+    background-color: black;
+}
+
+body 
+{
+  margin: 0;
+  padding: 0;
 }

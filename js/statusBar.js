@@ -9,6 +9,7 @@ class cStatusBar
         this.windowTitle="TheStatusBar";
         this.drawState=0; // 0: all blacks
         this.initialAnimCounter=0;
+        this.fps=0;
     }
 
     update()
@@ -21,6 +22,11 @@ class cStatusBar
 
     handleMessage(msgType,msgPayload)
     {
+    }
+
+    setFPS(fps)
+    {
+        this.fps=fps;
     }
 
     draw(fb)
@@ -36,7 +42,7 @@ class cStatusBar
         fb.printString(1,fb.numRows-1,"F1","lightgray","red");
         fb.printString(4,fb.numRows-1,"Help","lightgray","black");
 
-        fb.printString(fb.numCols-13,fb.numRows-1,"friolOS 0.1b","lightgray","black");
+        fb.printString(fb.numCols-22,fb.numRows-1,"friolOS 0.1b @ "+this.fps+" fps","lightgray","black");
 
         if (this.drawState==1)
         {

@@ -392,7 +392,7 @@ class cDOSShell
             else
             {
                 this.parentGui.listOfComponents=[];
-                this.parentGui.initialSetup(true);                
+                this.parentGui.initialSetup(true,this.parentGui.fbPtr);                
             }
         }
         else if (cmd.substring(0,2)=="cd")

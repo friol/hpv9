@@ -2,20 +2,32 @@
 
 class cGui
 {
-    constructor(fb)
+    constructor(fb,isMobile)
     {
         this.listOfComponents=new Array();
         this.mousexSquare=0;
         this.mouseySquare=0;
         this.fbPtr=fb;
+        this.isMobile=isMobile;
 
-        this.initialSetup(false);
+        this.initialSetup(false,fb);
     }
 
-    initialSetup(reinit)
+    initialSetup(reinit,fb)
     {
+        var loaderWidth=50; var loaderHeight=10;
+        if (this.isMobile)
+        {
+            loaderWidth=36;
+        }
+
+        const loaderX=(fb.numCols-loaderWidth)>>1;
+        const loaderY=(fb.numRows-loaderHeight)>>1;
+        var loaderWindow=new cLoader(loaderX,loaderY,"Loading",loaderWidth,loaderHeight,"#c02020",this);
+        this.addComponent(loaderWindow);
+
         var glbDesktop=new cDesktop();
-        var glbMenuBar=new cMenuBar(this);
+        var glbMenuBar=new cMenuBar(this,this.isMobile);
         var glbStatusBar=new cStatusBar(this);
 
         if (reinit)
@@ -37,8 +49,8 @@ class cGui
         {
             if ((this.listOfComponents[cmp].priority==-10000)||(this.listOfComponents[cmp].priority==10000))
             {
-                //this.listOfComponents[cmp].drawState=1;
-                this.listOfComponents[cmp].drawState=2;
+                this.listOfComponents[cmp].drawState=1;
+                //this.listOfComponents[cmp].drawState=2;
             }
         }    
     }
@@ -48,6 +60,17 @@ class cGui
         this.listOfComponents=[];
         var ds=new cDOSShell(this);
         this.listOfComponents.push(ds);
+    }
+
+    setFPS(fps)
+    {
+        for (var c=0;c<this.listOfComponents.length;c++)
+        {
+            if (this.listOfComponents[c].windowTitle=="TheStatusBar")
+            {
+                this.listOfComponents[c].setFPS(fps);
+            }
+        }
     }
 
     isFrontmost(pri)
