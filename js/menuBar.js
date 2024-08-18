@@ -203,7 +203,7 @@ class cMenuBar
 
     showHelp(callerObj)
     {
-        var helpWin=new cHelpWindow(5,9,"Help",50,20,"#2020c0",callerObj.guiPtr);
+        var helpWin=new cHelpWindow(5,9,"Help",50,26,"#2020c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(helpWin);
     }
 
