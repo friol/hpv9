@@ -8,9 +8,9 @@ class cHelpWindow extends cWindow
 
         this.helpText=
         [
-        "<br> Hello! <br> <br> If you are reading this, you have pressed F1. "+
+        "<br> Hello! <br> <br> If you are reading this, you are seeking for help. "+
         "So you probably noticed that this is an old "+
-        "<link_href='https://en.wikipedia.org/wiki/Text-based_user_interface'> text_based_GUI </link> , "+
+        "<link_href='https://en.wikipedia.org/wiki/Text-based_user_interface'> text_based_UI </link> , "+
         "something that was the hype in mid 90s, before the <link_href='https://en.wikipedia.org/wiki/Graphical_user_interface'> bitmapped_GUIs </link> "+
         "took the stage. <br> <br> "+
         "In my opinion, this is fascinating and quite versatile. I wrote a lot of "+
@@ -18,7 +18,7 @@ class cHelpWindow extends cWindow
         "in a GUI like this (compiling took more than 2 minutes, but this is another story). <br> <br> "+
         "Feel free to <link_href='1'> browse_around </link> , and visit the bunch of links in the above menu. <br> "+
         "Ah, to close this window, push the little green square above on the left. But you already "+
-        "knew that, huh? <br> "+
+        "knew that, huh? <br> <br> "+
         "Friol signin' off. <br> ",
 
         "<br> Oh, I didn't mention that this help text is an *hyper*-text too. <br> <br> So "+
@@ -52,8 +52,8 @@ class cHelpWindow extends cWindow
 
         "<br> You enter the bookshelf room, and there is a old, dusty (and rusty) book "+
         "on the desk, whose title seems to be 'Hypertexts, Volume I'. <br> <br> You slowly open it, and "+
-        "immediately notice a paragraph that starts with the sentence: 'If you need help, press F1'. <br> <br>"+
-        "A big pink link-like word lies underneath, and it says <br> <br> <link_href='0'> Home </link> ."
+        "immediately notice a paragraph that starts with the sentence: 'If you need help, press F1'. <br> <br> "+
+        "A big pink link-like word lies underneath, and it says <br> <br> <link_href='0'> Home </link> "
         ];
 
         this.currentText=0;

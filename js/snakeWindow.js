@@ -27,7 +27,7 @@ class cSnakeWindow extends cWindow
 
         // 0: empty space, 1: wall, 2:fruit
         this.gridXsize=dimx-2;
-        this.gridYsize=dimy-6;
+        this.gridYsize=dimy-10;
         this.grid=new Array();
         for (var r=0;r<this.gridYsize;r++)
         {
@@ -51,8 +51,13 @@ class cSnakeWindow extends cWindow
 
         this.generateRandomFruit();
 
-        this.pauseButton=new cButton(4,this.targetHeight-3,"Pause!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onPauseButt,this);
-        this.restartButton=new cButton(38,this.targetHeight-3,"Restart!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onRestartButt,this);
+        this.pauseButton=new cButton(4,this.targetHeight-7,"Pause!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onPauseButt,this);
+        this.restartButton=new cButton(38,this.targetHeight-7,"Restart!",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onRestartButt,this);
+        
+        this.leftButton=new cButton(15,this.targetHeight-5," < ",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onLeftButt,this);
+        this.rightButton=new cButton(31,this.targetHeight-5," > ",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onRightButt,this);
+        this.upButton=new cButton(23,this.targetHeight-7," ^ ",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onUpButt,this);
+        this.downButton=new cButton(23,this.targetHeight-3," v ",this.bgColor,"#00A800","white",this.targetPosx,this.targetPosy,this.onDownButt,this);
     }
 
     makeSnake()
@@ -97,6 +102,34 @@ class cSnakeWindow extends cWindow
         parent.gameState=0;
     }
 
+    onLeftButt(parent)
+    {
+        var dir=3;
+        if ((parent.direction == 1) && (dir == 3)) return;
+        parent.direction = dir;            
+    }
+
+    onRightButt(parent)
+    {
+        var dir=1;
+        if ((parent.direction == 3) && (dir == 1)) return;
+        parent.direction = dir;            
+    }
+
+    onUpButt(parent)
+    {
+        var dir=0;
+        if ((parent.direction == 2) && (dir == 0)) return;
+        parent.direction = dir;            
+    }
+
+    onDownButt(parent)
+    {
+        var dir=2;
+        if ((parent.direction == 0) && (dir == 2)) return;
+        parent.direction = dir;            
+    }
+
     generateRandomFruit()
     {
         var found=false;
@@ -131,6 +164,10 @@ class cSnakeWindow extends cWindow
         {
             this.pauseButton.updateParentPos(this.posx,this.posy);
             this.restartButton.updateParentPos(this.posx,this.posy);
+            this.leftButton.updateParentPos(this.posx,this.posy);
+            this.rightButton.updateParentPos(this.posx,this.posy);
+            this.upButton.updateParentPos(this.posx,this.posy);
+            this.downButton.updateParentPos(this.posx,this.posy);
         }
 
         if (this.dragging) return; // no updates when dragging
@@ -210,10 +247,18 @@ class cSnakeWindow extends cWindow
         {
             this.pauseButton.updateParentPos(this.posx,this.posy);
             this.restartButton.updateParentPos(this.posx,this.posy);
+            this.leftButton.updateParentPos(this.posx,this.posy);
+            this.rightButton.updateParentPos(this.posx,this.posy);
+            this.upButton.updateParentPos(this.posx,this.posy);
+            this.downButton.updateParentPos(this.posx,this.posy);
         }
 
         this.pauseButton.handleMessage(msgType,msgPayload);
         this.restartButton.handleMessage(msgType,msgPayload);
+        this.leftButton.handleMessage(msgType,msgPayload);
+        this.rightButton.handleMessage(msgType,msgPayload);
+        this.upButton.handleMessage(msgType,msgPayload);
+        this.downButton.handleMessage(msgType,msgPayload);
     }
 
     draw(fb)
@@ -247,6 +292,10 @@ class cSnakeWindow extends cWindow
 
         this.pauseButton.draw(fb);
         this.restartButton.draw(fb);
+        this.leftButton.draw(fb);
+        this.rightButton.draw(fb);
+        this.upButton.draw(fb);
+        this.downButton.draw(fb);
 
         if (this.gameState==2)
         {

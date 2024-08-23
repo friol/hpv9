@@ -18,12 +18,14 @@ class cGui
         var loaderWidth=50; var loaderHeight=10;
         if (this.isMobile)
         {
-            loaderWidth=36;
+            loaderWidth=this.fbPtr.numCols-4;
         }
 
+        var wintitle="Loading";
+        if (this.isMobile) wintitle+="Mob";
         const loaderX=(fb.numCols-loaderWidth)>>1;
         const loaderY=(fb.numRows-loaderHeight)>>1;
-        var loaderWindow=new cLoader(loaderX,loaderY,"Loading",loaderWidth,loaderHeight,"#c02020",this);
+        var loaderWindow=new cLoader(loaderX,loaderY,wintitle,loaderWidth,loaderHeight,"#c02020",this);
         this.addComponent(loaderWindow);
 
         var glbDesktop=new cDesktop();

@@ -66,15 +66,17 @@ function setup()
     console.log("friolOS v0.1b booting...");
 
     // is it a mobile phone?
-    const isMobile = mobileCheck();
-    //console.log(isMobile);
+    //const isMobile = mobileCheck();
+    const isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = (window.screen.width < 768) && isMobileUserAgent;
+    console.log("It's a mobile phone: "+isMobile);
 
     var w = window.innerWidth;
     var h = window.innerHeight;
     glbFrameBuffer=new cFrameBuffer(w,h,"mainDiv");
 
     glbGui=new cGui(glbFrameBuffer,isMobile);
-    //glbGui.activate();
+    //glbGui.activate(); // activate only in case of hurry
 
     var hammertime = new Hammer(document.getElementById("mainDiv"), {});
 

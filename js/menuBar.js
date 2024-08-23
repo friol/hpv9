@@ -67,7 +67,7 @@ class cMenuBar
                         {"name":"Save","shortcut":null,"highlighted":false,"enabled":false},
                         {"name":"Save As","shortcut":null,"highlighted":false,"enabled":false},
                         {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
-                        {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true},
+                        {"name":"Preferences","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.showPreferences},
                         {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
                     ]
                 },
@@ -171,7 +171,7 @@ class cMenuBar
                     "menuysize":5,
                     "options":
                     [
-                        {"name":"DebugWin","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
+                        {"name":"Task Manager","shortcut":null,"highlighted":false,"onClickFun":this.debugWindow,"enabled":true},
                         {"name":"Help","shortcut":null,"highlighted":false,"onClickFun":this.showHelp,"enabled":true},
                         {"name":"About this website","shortcut":null,"highlighted":false,"onClickFun":this.aboutFunction,"enabled":true},
                     ]
@@ -184,6 +184,23 @@ class cMenuBar
     openURL(callerObj)
     {
         window.open(this.siteURL, '_blank').focus();
+    }
+
+    showPreferences(callerObj)
+    {
+        function closeMe(callerObj)
+        {
+            this.deletionFlag=true;
+        }
+
+        const title="Preferences";
+        const px=(callerObj.guiPtr.fbPtr.numCols-50)>>1;
+        const py=(callerObj.guiPtr.fbPtr.numRows-7)>>1;
+
+        var dialogBox=new cAlertBox(true,"Nobody!",false,"",title,
+            ["Who needs preferences anyway..."],50,7,
+            px,py,callerObj.guiPtr,closeMe);
+        callerObj.guiPtr.addComponent(dialogBox);
     }
 
     aboutFunction(callerObj)
@@ -207,7 +224,7 @@ class cMenuBar
 
     openSnake(callerObj)
     {
-        var snakeWindow=new cSnakeWindow(5,9,"Snake-y",50,20,"#2020c0",callerObj.guiPtr);
+        var snakeWindow=new cSnakeWindow(5,9,"Snake-y",50,30,"#2020c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(snakeWindow);
     }
 
@@ -225,7 +242,7 @@ class cMenuBar
 
     debugWindow(callerObj)
     {
-        var debuggWindow=new cDebugWin(10,10,"Debuggg",50,10,"#c0c0c0",callerObj.guiPtr);
+        var debuggWindow=new cDebugWin(10,10,"Task Manager",50,10,"#c0c0c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(debuggWindow);
     }
 
@@ -246,7 +263,10 @@ class cMenuBar
 
     showHelp(callerObj)
     {
-        var helpWin=new cHelpWindow(5,9,"Help",50,26,"#2020c0",callerObj.guiPtr);
+        const px=(callerObj.guiPtr.fbPtr.numCols-50)>>1;
+        const py=(callerObj.guiPtr.fbPtr.numRows-26)>>1;
+
+        var helpWin=new cHelpWindow(px,py,"Help",50,26,"#2020c0",callerObj.guiPtr);
         callerObj.guiPtr.addComponent(helpWin);
     }
 
