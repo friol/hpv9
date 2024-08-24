@@ -71,7 +71,7 @@ class cMenuBar
                     "highlighted": false,
                     "open":false,
                     "menuxsize":26,
-                    "menuysize":6,
+                    "menuysize":7,
                     "options":
                     [
                         {"name":"Bubble Canvas","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
@@ -82,6 +82,9 @@ class cMenuBar
                         },
                         {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"https://www.dantonag.it/tetris/tetris.html"
+                        },
+                        {"name":"One-bit adventure","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/onebit/main.html"
                         },
                         {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
                     ]
@@ -168,13 +171,15 @@ class cMenuBar
                     "highlighted": false,
                     "open":false,
                     "menuxsize":30,
-                    "menuysize":5,
+                    "menuysize":6,
                     "options":
                     [
                         {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"https://github.com/friol"},
                         {"name":"shadertoy","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"https://www.shadertoy.com/user/friol"},
+                        {"name":"OPPD 2022","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://dantonag.it/oppd/index.html"},
                         {"name":"Cloud Basic","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"http://www.dantonag.it/basicjs/basicjs.html"},
                     ]
@@ -184,7 +189,7 @@ class cMenuBar
                     "highlighted": false,
                     "open":false,
                     "menuxsize":30,
-                    "menuysize":7,
+                    "menuysize":8,
                     "options":
                     [
                         {"name":"Snake","shortcut":null,"highlighted":false,"onClickFun":this.openSnake,"enabled":true},
@@ -193,6 +198,9 @@ class cMenuBar
                         },
                         {"name":"Blockz","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"https://www.dantonag.it/blockz/blockz.html"
+                        },
+                        {"name":"One-bit adventure","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/onebit/main.html"
                         },
                         {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
                             "siteURL":"https://www.dantonag.it/tetris/tetris.html"
