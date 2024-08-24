@@ -49,7 +49,44 @@ class cMenuBar
                         {"name":this.separatorName,"shortcut":null,"highlighted":false,"enabled":true},
                         {"name":"Quit to DOS","shortcut":null,"highlighted":false,"enabled":true,"onClickFun":this.quitToDOS}
                     ]
-                }
+                },
+                {
+                    "name":"Code",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":20,
+                    "menuysize":5,
+                    "options":
+                    [
+                        {"name":"github","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://github.com/friol"},
+                        {"name":"shadertoy","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.shadertoy.com/user/friol"},
+                        {"name":"Cloud Basic","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"http://www.dantonag.it/basicjs/basicjs.html"},
+                    ]
+                },
+                {
+                    "name":"Games",
+                    "highlighted": false,
+                    "open":false,
+                    "menuxsize":26,
+                    "menuysize":6,
+                    "options":
+                    [
+                        {"name":"Bubble Canvas","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/bubbleCanvas/bubbleCanvas.html"
+                        },
+                        {"name":"Blockz","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/blockz/blockz.html"
+                        },
+                        {"name":"Tetris","shortcut":null,"highlighted":false,"onClickFun":this.openURL,"enabled":true,
+                            "siteURL":"https://www.dantonag.it/tetris/tetris.html"
+                        },
+                        {"name":"Global Thermonuclear War","shortcut":null,"highlighted":false,"enabled":false},
+                    ]
+                },
+
             ];
         }
         else
@@ -427,9 +464,7 @@ class cMenuBar
             // solid background
             for (var col=poz-2;col<(poz+xsz);col++)            
             {
-                fb.framebuffer[row][col].character="\u2588";
-                fb.framebuffer[row][col].bgColor="lightgray";
-                fb.framebuffer[row][col].fgColor="lightgray";
+                fb.putPixel(row,col,"\u2588","lightgray","lightgray");
             }
 
             // right shadow
@@ -438,47 +473,30 @@ class cMenuBar
             // contour line
             if (row==1)
             {
-                fb.framebuffer[row][poz-1].character="┌";
-                fb.framebuffer[row][poz-1].bgColor="lightgray";
-                fb.framebuffer[row][poz-1].fgColor="black";
+                fb.putPixel(row,poz-1,"┌","lightgray","black");
 
                 for (var col=poz;col<(poz+xsz-2);col++)            
                 {
-                    fb.framebuffer[row][col].character="─";
-                    fb.framebuffer[row][col].bgColor="lightgray";
-                    fb.framebuffer[row][col].fgColor="black";
+                    fb.putPixel(row,col,"─","lightgray","black");
                 }
         
-                fb.framebuffer[row][poz+xsz-2].character="┐";
-                fb.framebuffer[row][poz+xsz-2].bgColor="lightgray";
-                fb.framebuffer[row][poz+xsz-2].fgColor="black";
+                fb.putPixel(row,poz+xsz-2,"┐","lightgray","black");
             }
             else if (row==ysz)
             {
-                fb.framebuffer[row][poz-1].character="└";
-                fb.framebuffer[row][poz-1].bgColor="lightgray";
-                fb.framebuffer[row][poz-1].fgColor="black";
+                fb.putPixel(row,poz-1,"└","lightgray","black");
 
                 for (var col=poz;col<(poz+xsz-2);col++)            
                 {
-                    fb.framebuffer[row][col].character="─";
-                    fb.framebuffer[row][col].bgColor="lightgray";
-                    fb.framebuffer[row][col].fgColor="black";
+                    fb.putPixel(row,col,"─","lightgray","black");
                 }
         
-                fb.framebuffer[row][poz+xsz-2].character="┘";
-                fb.framebuffer[row][poz+xsz-2].bgColor="lightgray";
-                fb.framebuffer[row][poz+xsz-2].fgColor="black";
+                fb.putPixel(row,poz+xsz-2,"┘","lightgray","black");
             }
             else
             {
-                fb.framebuffer[row][poz-1].character="│";
-                fb.framebuffer[row][poz-1].bgColor="lightgray";
-                fb.framebuffer[row][poz-1].fgColor="black";
-
-                fb.framebuffer[row][poz+xsz-2].character="│";
-                fb.framebuffer[row][poz+xsz-2].bgColor="lightgray";
-                fb.framebuffer[row][poz+xsz-2].fgColor="black";
+                fb.putPixel(row,poz-1,"│","lightgray","black");
+                fb.putPixel(row,poz+xsz-2,"│","lightgray","black");
             }
 
             // menu items
@@ -489,15 +507,11 @@ class cMenuBar
 
                 if (menuvoice==this.separatorName)
                 {
-                    fb.framebuffer[currow][poz-1].character="├";
-                    fb.framebuffer[currow][poz-1].bgColor="lightgray";
-                    fb.framebuffer[currow][poz-1].fgColor="black";
+                    fb.putPixel(currow,poz-1,"├","lightgray","black");
 
                     fb.drawHorizontalLine(currow,poz,poz+xsz-1,"─","lightgray","black");
 
-                    fb.framebuffer[currow][poz+xsz-2].character="┤";
-                    fb.framebuffer[currow][poz+xsz-2].bgColor="lightgray";
-                    fb.framebuffer[currow][poz+xsz-2].fgColor="black";
+                    fb.putPixel(currow,poz+xsz-2,"┤","lightgray","black");
                 }
                 else
                 {
